@@ -21,3 +21,6 @@ subprojects {
 task createWrapper(type: Wrapper) {
     gradleVersion = '1.7'
 }
+
+
+// TODO: clean should remove runner folder; or should it?

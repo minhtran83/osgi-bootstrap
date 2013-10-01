@@ -14,9 +14,6 @@
 #--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
 #--profilesRepositories=file:C:/projects/src/paxrunner_samples/runner-repository
 
-#### Primary JAR Provisioning ####
-file:jaxrs-connector/build/libs/jaxrs-connector.jar@update
-
 #### GSON ####
 #scan-bundle:mvn:com.google.code.gson/gson/2.2.2
 
@@ -62,5 +59,7 @@ scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
 #mvn:org.apache.cxf.dosgi.samples/cxf-dosgi-ri-samples-greeter-rest-interface/1.2@20
 scan-bundle:mvn:com.google.code.gson/gson/2.2.2@20
 
+#### Primary JAR Provisioning ####
+file:jaxrs-connector/build/libs/jaxrs-connector.jar@update
 
 
