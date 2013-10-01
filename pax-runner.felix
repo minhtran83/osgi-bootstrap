@@ -1,0 +1,72 @@
+#########################################
+# Pax Runner Profile                    #
+#########################################
+
+#### Run Command ####
+# pax-run --log=debug --args=file:pax-runner.felix
+#   or
+# pax-run --log=debug  --profiles=felix.webconsole build\libs\pax-runner.jar
+
+#### Options ####
+--p=felix
+# profiles list: http://repository.ops4j.org/maven2/org/ops4j/pax/runner/profiles/
+--profiles=felix.webconsole/3.0.0,web/0.7.2
+#--version=4.0.0
+#--startLevel=25
+#--dir=server
+#--ee=OSGi/Minimum-1.0,OSGi/Minimum-1.1,OSGi/Minimum-1.0,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5
+--vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dfelix.fileinstall.dir=../src/main/config -Dfelix.fileinstall.disableConfigSave=true
+#--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
+#--profilesRepositories=file:C:/projects/src/paxrunner_samples/runner-repository
+
+#### Primary JAR Provisioning ####
+file:build/libs/pax-runner.jar@update
+
+#### GSON ####
+#scan-bundle:mvn:com.google.code.gson/gson/2.2.2
+
+#### Jersy JAX-RS ####
+#scan-bundle:mvn:com.sun.jersey/jersey-bundle/1.17
+#scan-bundle:mvn:org.glassfish.jersey.core/jersey-common/2.2
+#scan-bundle:mvn:org.glassfish.jersey.core/jersey-server/2.2
+#scan-bundle:mvn:org.glassfish.jersey.core/jersey-client/2.2
+
+scan-bundle:mvn:com.sun.jersey/jersey-core/1.17
+scan-bundle:mvn:com.sun.jersey/jersey-servlet/1.17
+scan-bundle:mvn:com.sun.jersey/jersey-server/1.17
+
+#### Holger Staudacher's OSGI JAX RS Connector ####
+scan-bundle:mvn:com.eclipsesource/osgi-jaxrs-connector/2.1.1
+
+#### Pax Logging ####
+scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.0
+scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.0
+
+#### Pax Web (HTTP Service, WAB support, JSP support) ####
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-api/2.1.2
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-extender-war/2.1.2
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-jsp/2.1.2
+
+#### Apache Felix Utiltiies ####
+#### localhost:8080/system/console ####
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
+scan-bundle:mvn:org.apache.felix/org.apache.felix.fileinstall/3.2.6
+scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0
+scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
+
+#scan-bundle:mvn:org.osgi/org.osgi.compendium/4.3.1
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.0.2@5
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/1.0.0@5
+
+#### Declarative Services ####
+scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
+
+
+#### Third Party Libraries Provisioning ####
+#mvn:org.apache.cxf.dosgi.samples/cxf-dosgi-ri-samples-greeter-rest-client/1.2@20
+#mvn:org.apache.cxf.dosgi.samples/cxf-dosgi-ri-samples-greeter-rest-interface/1.2@20
+scan-bundle:mvn:com.google.code.gson/gson/2.2.2@20
+
+
+
