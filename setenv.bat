@@ -1,1 +1,0 @@
-set PATH=%PATH%;C:\projects\pax-runner\pax-runner-1.8.5\bin

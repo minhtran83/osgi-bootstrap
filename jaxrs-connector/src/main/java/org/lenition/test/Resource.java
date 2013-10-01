@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  * Also see https://source.everit.biz/viewvc/everit-osgi/tags/osgi-0.8.0/samples/jaxrs/
  */
 @Component
-@Service(TestResource.class)
-@Path(TestResource.CONTEXT)
-public class TestResource {
+@Service(Resource.class)
+@Path(Resource.CONTEXT)
+public class Resource {
 
 	public static final String CONTEXT = "test";
 	
-    private static Logger logger = LoggerFactory.getLogger(TestResource.class);
+    private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
 //	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
 

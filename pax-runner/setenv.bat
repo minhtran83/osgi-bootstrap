@@ -1,0 +1,1 @@
+set PATH=%PATH%;C:\projects\osgi-bootstrap\pax-runner\bin
