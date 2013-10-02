@@ -14,7 +14,9 @@ dependencies {
             "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
 			"com.sun.jersey:jersey-bundle:$versions.jersey",
             "com.google.code.gson:gson:$versions.gson",
-            "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging"
+            "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
+            "com.google.guava:guava:$versions.guava"
+
 
     testCompile "junit:junit:$versions.junit"
 				

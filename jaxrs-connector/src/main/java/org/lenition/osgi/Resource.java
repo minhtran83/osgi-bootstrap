@@ -1,5 +1,7 @@
 package org.lenition.osgi;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 
@@ -68,25 +70,15 @@ public class Resource {
 	@Produces("application/json")
 	public String getDefault() throws Exception {
         logger.info("getDefault() called.");
-        // TODO: get resource from local classpath
 
+        URL url = Resources.getResource(Resource.class, "/success.json");
         /*
-
-        'com.google.guava:guava:15.0'
-        scan-bundle:mvn:com.google.guava/guava/15.0@20
-
-        URL url = null;
-
-        url = getClass().getResource("/success.json");
-        logger.info( Resources.toString(url, Charsets.UTF_8));
-
-        url = getClass().getClassLoader().getResource("success.json");
-        logger.info( Resources.toString(url, Charsets.UTF_8));
-
-        url = Resources.getResource(Resource.class, "success.json");
+         equivalent to both of:
+             url = getClass().getResource("/success.json");
+             url = getClass().getClassLoader().getResource("success.json");
+         */
         String text = Resources.toString(url, Charsets.UTF_8);
-        */
-		return (new Gson()).toJson("success");
+		return text;
 	}
 
 
