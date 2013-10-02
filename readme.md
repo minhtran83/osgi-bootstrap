@@ -9,6 +9,14 @@ pax-run --log=debug --args=file:jaxrs-connector/felix.run
 ```
 
 
+Service Frameworks, Tools and Component Models
+==========
+| subproject     | osgi-jax-rs-connector | whiteboard pattern |     SCR/DS    |
+| -------------- |-----------------------| -------------------|---------------|
+| jaxrs-connector| yes                   |                    |      yes     |
+| whiteboard     |                       |  yes               |               |
+
+
 Monolithic Code -> many dependencies + tight coupling -> risk averse development -> slow development
 
 Make modularity a high priority design criteria -> team autonomy
