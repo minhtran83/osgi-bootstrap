@@ -5,6 +5,7 @@ To run :
 
 ```
 pax-runner/setenv.bat
+gradlew build
 pax-run --log=debug --args=file:jaxrs-connector/felix.run
 ```
 
