@@ -1,6 +1,24 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+ext {
+    githubProjectName = 'osgi-bootstrap'
+    versions = [
+            junit                  : '4.11',
+            paxlogging             : '1.7.1',
+            felixscr               : '1.8.0',
+            jersey                 : '1.17',
+            gson                   : '2.2.2'
+    ]
+}
+
 allprojects { project ->
+
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'osgi'
+
     buildscript {
         repositories {
             mavenCentral()
@@ -10,17 +28,8 @@ allprojects { project ->
         mavenCentral()
     }
 
-    apply plugin: 'java'
-
-}
-
-subprojects {
-
 }
 
 task createWrapper(type: Wrapper) {
     gradleVersion = '1.7'
 }
-
-
-// TODO: clean should remove runner folder; or should it?
