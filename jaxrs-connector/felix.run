@@ -5,7 +5,8 @@
 #### Options ####
 --p=felix
 # profiles list: http://repository.ops4j.org/maven2/org/ops4j/pax/runner/profiles/
---profiles=felix.webconsole/3.0.0,web/0.7.2
+# profiles often have much older versions: felix.webconsole/3.0.0/composite included pax-logging 1.6.1
+#--profiles=felix.webconsole/3.0.0, web/0.7.2
 #--version=4.0.0
 #--startLevel=25
 #--dir=server
@@ -18,11 +19,6 @@
 #scan-bundle:mvn:com.google.code.gson/gson/2.2.2
 
 #### Jersy JAX-RS ####
-#scan-bundle:mvn:com.sun.jersey/jersey-bundle/1.17
-#scan-bundle:mvn:org.glassfish.jersey.core/jersey-common/2.2
-#scan-bundle:mvn:org.glassfish.jersey.core/jersey-server/2.2
-#scan-bundle:mvn:org.glassfish.jersey.core/jersey-client/2.2
-
 scan-bundle:mvn:com.sun.jersey/jersey-core/1.17
 scan-bundle:mvn:com.sun.jersey/jersey-servlet/1.17
 scan-bundle:mvn:com.sun.jersey/jersey-server/1.17
@@ -31,18 +27,18 @@ scan-bundle:mvn:com.sun.jersey/jersey-server/1.17
 scan-bundle:mvn:com.eclipsesource/osgi-jaxrs-connector/2.1.1
 
 #### Pax Logging ####
-scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.0
-scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.0
+scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.1
+scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.1
 
 #### Pax Web (HTTP Service, WAB support, JSP support) ####
 #scan-bundle:mvn:org.ops4j.pax.web/pax-web-api/2.1.2
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
+scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
 #scan-bundle:mvn:org.ops4j.pax.web/pax-web-extender-war/2.1.2
 #scan-bundle:mvn:org.ops4j.pax.web/pax-web-jsp/2.1.2
 
 #### Apache Felix Utiltiies ####
 #### localhost:8080/system/console ####
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
+scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
 scan-bundle:mvn:org.apache.felix/org.apache.felix.fileinstall/3.2.6
 scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0
 scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
