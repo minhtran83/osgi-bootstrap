@@ -7,15 +7,30 @@ subprojects { project ->
     apply plugin: 'java'
     apply plugin: 'osgi'
 
-    sourceCompatibility = 1.6
-    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
     repositories {
         mavenCentral()
     }
 
+
+    dependencies {
+        testCompile "junit:junit:$versions.junit",
+                    'org.mockito:mockito-all:1.8.4'
+
+    }
     // Restore status after Java plugin
     status = rootProject.status
+
+    /*
+     * Generates OSGi Declarative Services component definition xml files
+     * by analyzing source files.
+     */
+    task genscr(dependsOn: compileJava) << {
+        ant.taskdef(resource: 'scrtask.properties',
+                classpath: configurations.dscompile.asPath )
+        ant.scr(srcdir: 'src/main/java', destdir: 'build/classes/main',
+                classpath: configurations.dscompile.asPath)
+    }
+
 
     task sourcesJar(type: Jar, dependsOn:classes) {
         from sourceSets.main.allSource

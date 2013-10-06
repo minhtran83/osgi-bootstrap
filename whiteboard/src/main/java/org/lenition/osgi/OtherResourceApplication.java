@@ -6,10 +6,11 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
 
 import javax.ws.rs.core.Application;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
+/**
+ * JAX RS Application used as a container for provider classes.
+ */
 @Service(Application.class)
 @Component
 @Properties({
@@ -19,6 +20,9 @@ public class OtherResourceApplication extends Application {
 
     private final Set<Class<?>> resources  = new java.util.HashSet<Class<?>>();
 
+    /**
+     * Default constructor.
+     */
     public OtherResourceApplication() {
         resources.add(Resource.class);
     }

@@ -2,26 +2,34 @@ package org.lenition.osgi;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import org.apache.felix.scr.annotations.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Reference;
+import org.apache.felix.scr.annotations.ReferenceCardinality;
+import org.apache.felix.scr.annotations.ReferencePolicy;
+import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.Dictionary;
 
 /**
  * Registered with osgi-jaxrs-connector.
- * Alternatively, use the whiteboard pattern http://svn.apache.org/repos/asf/felix/trunk/http/samples/whiteboard/src/main/java/org/apache/felix/http/samples/whiteboard/Activator.java
+ * Alternatively, use the whiteboard pattern
+ * http://svn.apache.org/repos/asf/felix/trunk/http/samples/whiteboard/
  * Another whiteboard example using DependencyActivatorBase at http://vimeo.com/45035108, 7:00 and 13:30
  *
  * Also see https://source.everit.biz/viewvc/everit-osgi/tags/osgi-0.8.0/samples/jaxrs/
  *
- * osgi-jaxrs-connector causes an intermittent start order dependencies. If the resource isn't activated when jax-rs starts, it will cause an error:
+ * osgi-jaxrs-connector causes an intermittent start order dependencies. If the resource isn't
+ * activated when jax-rs starts, it will cause an error:
  *
  * [FelixDispatchQueue] DEBUG com.eclipsesource.jaxrs.connector - FrameworkEvent ERROR - com.eclipsesource.jaxrs.connector
  java.lang.NullPointerException
@@ -59,13 +67,20 @@ import java.net.URL;
 @Path(Resource.CONTEXT)
 public class Resource {
 
+    /**
+     * Path for this resource.
+     */
     public static final String CONTEXT = "resource";
-	
     private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
-	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
+    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
     private ConfigurationAdmin configurationAdmin;
 
+    /**
+     * Default (root) GET.
+     * @return HTTP response string
+     * @throws Exception
+     */
     @GET
     @Produces("application/json")
     public String getDefault() throws Exception {
@@ -81,6 +96,11 @@ public class Resource {
         return text;
     }
 
+    /**
+     * GET method for inspecting properties .
+     * @return HTTP response string
+     * @throws Exception
+     */
     @GET
     @Path("config")
     @Produces("application/json")
@@ -88,17 +108,43 @@ public class Resource {
         return (String) this.configurationAdmin.getConfiguration("com.eclipsesource.jaxrs.connector").getProperties().get("root");
     }
 
-    // ----------------------------------------------------------------------
-    // bind/unbind methods for Declarative Services
-    // ----------------------------------------------------------------------
+    /**
+     * Bind method for Declarative Services.
+     * @param svc Service to bind
+     */
     public synchronized void bindConfigurationAdmin(ConfigurationAdmin svc) {
         configurationAdmin = svc;
     }
 
+    /**
+     * Unbind method for Declarative Services.
+     * @param svc Service to unbind
+     */
     public synchronized void unbindConfigurationAdmin(ConfigurationAdmin svc) {
-        if (svc == configurationAdmin)
+        if (svc == configurationAdmin) {
             configurationAdmin = null;
+        }
     }
-        
-    
+
+    /**
+     * Pretty print method for dictionary.
+     * @param dictionary dictionary to print
+     * @param <K> key type
+     * @param <V> value type
+     * @return pretty printed string
+     */
+    public static <K, V> String prettyPrint(Dictionary<K, V> dictionary) {
+        if (dictionary == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder("[");
+        int i = 0;
+        for (K key : Collections.list(dictionary.keys())) {
+            sb.append(key + "=" + dictionary.get(key));
+            sb.append(",\n");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
 }

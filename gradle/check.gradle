@@ -58,6 +58,11 @@ subprojects {
     // PMD
     // Configuration docs at http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html
     apply plugin: 'pmd'
+    pmd {
+        // Bug in PMD 4.2.6 causes ThreadGroup warnings: http://sourceforge.net/p/pmd/discussion/188192/thread/651de749
+        toolVersion '4.2.5'
+    }
+
     tasks.withType(Pmd) {
         reports.html.enabled = true
         ignoreFailures = true

@@ -24,10 +24,17 @@ import java.net.URL;
 @Path(Resource.CONTEXT)
 public class Resource {
 
-	public static final String CONTEXT = "resource";
-	
+    /**
+     * Path for resource.
+     */
+    public static final String CONTEXT = "resource";
     private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
+    /**
+     * Default (root) GET.
+     * @return HTTP response string
+     * @throws Exception
+     */
     @GET
     @Produces("application/json")
     public String getDefault() throws Exception {
@@ -55,7 +62,4 @@ public class Resource {
 //
 //        return (String) c.getProperties().get("root");
 //    }
-
-
-    
 }

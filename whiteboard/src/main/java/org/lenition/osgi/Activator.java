@@ -1,7 +1,12 @@
 package org.lenition.osgi;
 
 import com.sun.jersey.spi.container.servlet.ServletContainer;
-import org.osgi.framework.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -10,10 +15,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.Servlet;
 import javax.ws.rs.core.Application;
-import java.lang.Override;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+/**
+ * Activator class. Registers ServiceTracker and Configuration
+ */
 public class Activator implements BundleActivator {
 
     private static Logger logger = LoggerFactory.getLogger(Activator.class);
@@ -28,11 +35,14 @@ public class Activator implements BundleActivator {
     public void start(BundleContext context) throws Exception {
         logger.info("Activator.start() called.");
 
-        // chosen so that the JAX-RS 2.0 implementation of UriBuilder (org.glassfish.jersey.server.internal.RuntimeDelegateImpl) is used instead of com.sun.jersey.apu.uri.UriBuilderImpl
-        System.setProperty( "javax.ws.rs.ext.RuntimeDelegate", "org.glassfish.jersey.server.internal.RuntimeDelegateImpl" );
+        // chosen so that the JAX-RS 2.0 implementation of UriBuilder
+        // (org.glassfish.jersey.server.internal.RuntimeDelegateImpl) is used
+        // instead of com.sun.jersey.apu.uri.UriBuilderImpl
+        System.setProperty("javax.ws.rs.ext.RuntimeDelegate",
+                "org.glassfish.jersey.server.internal.RuntimeDelegateImpl");
 
         this.context = context;
-        registerConfiguration( context );
+        registerConfiguration(context);
 
         //Track all JAX-RS Applications
         this.tracker = new ServiceTracker(context, Application.class.getName(), new Customizer());
@@ -50,19 +60,19 @@ public class Activator implements BundleActivator {
         configRegistration = null;
     }
 
-    private void registerConfiguration( BundleContext context ) {
+    private void registerConfiguration(BundleContext context) {
         Dictionary<String, String> properties = new Hashtable<String, String>();
-        properties.put( Constants.SERVICE_PID, Configuration.CONFIG_SERVICE_PID );
-        configRegistration = context.registerService( ManagedService.class.getName(), new Configuration(), properties );
+        properties.put(Constants.SERVICE_PID, Configuration.CONFIG_SERVICE_PID);
+        configRegistration = context.registerService(ManagedService.class.getName(), new Configuration(), properties);
     }
 
     private class Customizer implements ServiceTrackerCustomizer {
 
-        private Dictionary createProps(ServiceReference reference) {
+        private Dictionary<String, String> createProps(ServiceReference reference) {
             String alias = reference.getProperty("alias").toString();
             logger.debug("Alias: " + alias);
 
-            Dictionary props = new Hashtable();
+            Dictionary<String, String> props = new Hashtable<String, String>();
             props.put("alias", alias);
             return props;
         }
@@ -78,14 +88,12 @@ public class Activator implements BundleActivator {
 
             Bundle sourceBundle = reference.getBundle();
             BundleContext sourceContext = sourceBundle.getBundleContext();
-            ServiceRegistration reg = sourceContext.registerService( Servlet.class.getName(),
-                    servlet, createProps(reference));
-
-            return reg;
+            return sourceContext.registerService(Servlet.class.getName(), servlet, createProps(reference));
         }
 
         /** {@inheritDoc} */
         @Override
+        @SuppressWarnings("unchecked")
         public void modifiedService(ServiceReference reference, Object service) {
             ServiceRegistration reg = (ServiceRegistration)service;
             logger.debug("Modifying JAX-RS application: " + reg);

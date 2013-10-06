@@ -44,13 +44,14 @@
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocMethod">
-          <property name="scope" value="package"/>
+          <property name="scope" value="public"/>
           <property name="allowMissingParamTags" value="true"/>
           <property name="allowMissingThrowsTags" value="true"/>
           <property name="allowMissingReturnTag" value="true"/>
           <property name="allowThrowsTagsForSubclasses" value="true"/>
           <property name="allowUndeclaredRTE" value="true"/>
           <property name="allowMissingPropertyJavadoc" value="true"/>
+          <property name="tokens" value="METHOD_DEF"/>
         </module>
         <module name="JavadocType">
           <property name="scope" value="package"/>
@@ -105,7 +106,9 @@
         <module name="OperatorWrap"/>
         <module name="ParenPad"/>
         <module name="TypecastParenPad"/>
-        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAfter">
+            <property name="tokens" value="COMMA, SEMI"/>
+        </module>
         <module name="WhitespaceAround"/>
 
         <!-- Modifier Checks                                    -->
