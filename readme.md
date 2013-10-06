@@ -6,8 +6,16 @@ To run :
 ```
 pax-runner/setenv.bat
 gradlew build
+```
+
+```
 pax-run --log=debug --args=file:jaxrs-connector/felix.run
 ```
+or
+```
+pax-run --log=debug --args=file:whiteboard/felix.run
+```
+
 
 
 Service Frameworks, Tools and Component Models
@@ -16,7 +24,7 @@ Service Frameworks, Tools and Component Models
 | -------------------- |-------------------|-------------|
 | osgi-jax-rs-connector| yes               |             |
 | whiteboard pattern   |                   |  yes        |
-| SCR/DS               | yes               | yes         |
+| SCR/DS               | yes               |  yes         |
 
 
 Monolithic Code -> many dependencies + tight coupling -> risk averse development -> slow development
