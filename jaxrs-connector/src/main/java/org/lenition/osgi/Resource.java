@@ -2,14 +2,13 @@ package org.lenition.osgi;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
+import org.apache.felix.scr.annotations.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import com.google.gson.Gson;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +63,8 @@ public class Resource {
 	
     private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
-//	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
+	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
+    private ConfigurationAdmin configurationAdmin;
 
     @GET
     @Produces("application/json")
@@ -81,19 +81,24 @@ public class Resource {
         return text;
     }
 
+    @GET
+    @Path("config")
+    @Produces("application/json")
+    public String getConfig() throws Exception {
+        return (String) this.configurationAdmin.getConfiguration("com.eclipsesource.jaxrs.connector").getProperties().get("root");
+    }
 
-
-	// ----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
     // bind/unbind methods for Declarative Services
     // ----------------------------------------------------------------------
-//    public synchronized void bindRpcService(RpcService svc) {
-//        rpcService = svc;
-//    }
-//
-//    public synchronized void unbindRpcService(RpcService svc) {
-//        if (svc == rpcService)
-//            rpcService = null;
-//    }
+    public synchronized void bindConfigurationAdmin(ConfigurationAdmin svc) {
+        configurationAdmin = svc;
+    }
+
+    public synchronized void unbindConfigurationAdmin(ConfigurationAdmin svc) {
+        if (svc == configurationAdmin)
+            configurationAdmin = null;
+    }
         
     
 }

@@ -52,7 +52,8 @@ project('jaxrs-connector') {
                 "com.sun.jersey:jersey-bundle:$versions.jersey",
                 "com.google.code.gson:gson:$versions.gson",
                 "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
-                "com.google.guava:guava:$versions.guava"
+                "com.google.guava:guava:$versions.guava",
+                'org.osgi:org.osgi.compendium:4.3.1'
 
         testCompile "junit:junit:$versions.junit"
     }
@@ -112,7 +113,6 @@ project('whiteboard') {
                 "com.google.guava:guava:$versions.guava",
                 'org.osgi:org.osgi.compendium:4.3.1',
                 "javax.servlet:servlet-api:2.5"
-
 
         testCompile "junit:junit:$versions.junit"
     }
