@@ -60,15 +60,15 @@ import java.net.URL;
 @Path(Resource.CONTEXT)
 public class Resource {
 
-	public static final String CONTEXT = "resource";
+    public static final String CONTEXT = "resource";
 	
     private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
 //	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
 
-	@GET
-	@Produces("application/json")
-	public String getDefault() throws Exception {
+    @GET
+    @Produces("application/json")
+    public String getDefault() throws Exception {
         logger.info("getDefault() called.");
 
         URL url = Resources.getResource(Resource.class, "/success.json");
@@ -78,8 +78,8 @@ public class Resource {
              url = getClass().getClassLoader().getResource("success.json");
          */
         String text = Resources.toString(url, Charsets.UTF_8);
-		return text;
-	}
+        return text;
+    }
 
 
 

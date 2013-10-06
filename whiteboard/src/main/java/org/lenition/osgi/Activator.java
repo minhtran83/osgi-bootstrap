@@ -24,6 +24,7 @@ public class Activator implements BundleActivator {
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("unchecked")
     public void start(BundleContext context) throws Exception {
         logger.info("Activator.start() called.");
 

@@ -1,0 +1,65 @@
+subprojects {
+    // Checkstyle
+    // adapted from https://gist.github.com/skhatri/1896321
+    // Configuraiton docs at http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        showViolations = false
+        ignoreFailures = true
+        configFile = rootProject.file("$rootDir/config/checkstyle/checkstyle.xml")
+    }
+
+    checkstyleMain {
+        reports {
+            include ( '**/*.java')
+            xml {
+                destination "${project.buildDir}/reports/checkstyle/main.xml"
+            }
+        }
+    }
+
+    checkstyleTest {
+        reports {
+            xml {
+                destination "${project.buildDir}/reports/checkstyle/test.xml"
+            }
+        }
+    }
+
+    task checkstyle(dependsOn:['checkstyleMain', 'checkstyleTest']) {
+        description = 'Run checkstyle on all sourcesets.'
+    }
+
+    // FindBugs
+    // Configuration docs at http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
+    // and http://www.gradle.org/docs/current/userguide/findbugs_plugin.html
+    apply plugin: 'findbugs'
+    findbugs {
+        toolVersion = "2.0.1"
+        reportsDir = file("$project.buildDir/findbugsReports")
+        effort = "max"
+        reportLevel = "high"
+        ignoreFailures = true
+    }
+
+    tasks.withType(FindBugs) {
+        reports {
+            // only one type of report may be enabled at a time
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    task findbugs(dependsOn:['findbugsMain', 'findbugsTest']) {
+        description = 'Run findsbugs on all sourcesets.'
+    }
+
+    // PMD
+    // Configuration docs at http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.PmdExtension.html
+    apply plugin: 'pmd'
+    tasks.withType(Pmd) {
+        reports.html.enabled = true
+        ignoreFailures = true
+    }
+}

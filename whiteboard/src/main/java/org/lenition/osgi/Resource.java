@@ -28,9 +28,9 @@ public class Resource {
 	
     private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
-	@GET
-	@Produces("application/json")
-	public String getDefault() throws Exception {
+    @GET
+    @Produces("application/json")
+    public String getDefault() throws Exception {
         logger.info("getDefault() called.");
 
         URL url = Resources.getResource(Resource.class, "/success.json");
@@ -40,8 +40,8 @@ public class Resource {
              url = getClass().getClassLoader().getResource("success.json");
          */
         String text = Resources.toString(url, Charsets.UTF_8);
-		return text;
-	}
+        return text;
+    }
 
 //    @GET
 //    @Produces("application/json")

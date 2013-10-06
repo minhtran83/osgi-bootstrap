@@ -6,6 +6,8 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
 
 import javax.ws.rs.core.Application;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Service(Application.class)
@@ -15,14 +17,14 @@ import java.util.Set;
 })
 public class OtherResourceApplication extends Application {
 
-    private static final Set<Class<?>> CLASSES  = new java.util.HashSet<Class<?>>();
+    private final Set<Class<?>> resources  = new java.util.HashSet<Class<?>>();
 
-    static {
-        CLASSES.add(Resource.class);
+    public OtherResourceApplication() {
+        resources.add(Resource.class);
     }
 
     @Override
     public Set<Class<?>> getClasses() {
-        return CLASSES;
+        return resources;
     }
 }
