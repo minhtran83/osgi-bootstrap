@@ -6,7 +6,7 @@ ext {
             junit                  : '4.11',
             paxlogging             : '1.7.1',
             felixscr               : '1.9.6',
-            felixscrant            : '1.5.0',
+            felixscrant            : '1.7.0',
             jersey                 : '1.17',
             gson                   : '2.2.2',
             guava                  : '15.0',
