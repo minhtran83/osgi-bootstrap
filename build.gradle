@@ -5,7 +5,8 @@ ext {
     versions = [
             junit                  : '4.11',
             paxlogging             : '1.7.1',
-            felixscr               : '1.8.0',
+            felixscr               : '1.9.6',
+            felixscrant            : '1.5.0',
             jersey                 : '1.17',
             gson                   : '2.2.2',
             guava                  : '15.0',
@@ -36,17 +37,7 @@ apply from: file('gradle/check.gradle')
 
 project('jaxrs-connector') {
 
-    configurations {
-        dscompile {
-            extendsFrom compile
-        }
-    }
-
     dependencies {
-        dscompile 'org.apache.felix:org.apache.felix.scr.ant:1.4.0',
-                "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
-                'org.osgi:org.osgi.compendium:4.3.1'
-
         compile 'org.osgi:org.osgi.core:4.3.0',
                 "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
                 "com.sun.jersey:jersey-bundle:$versions.jersey",
@@ -82,17 +73,7 @@ project('jaxrs-connector') {
 
 
 project('whiteboard') {
-    configurations {
-        dscompile {
-            extendsFrom compile
-        }
-    }
-
     dependencies {
-        dscompile 'org.apache.felix:org.apache.felix.scr.ant:1.4.0',
-                "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
-                'org.osgi:org.osgi.compendium:4.3.1'
-
         compile 'org.osgi:org.osgi.core:4.3.0',
                 "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
                 "com.sun.jersey:jersey-bundle:$versions.jersey",

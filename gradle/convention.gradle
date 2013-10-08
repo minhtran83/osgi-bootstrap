@@ -11,10 +11,21 @@ subprojects { project ->
         mavenCentral()
     }
 
+    /** Configuration for SCR task **/
+    configurations {
+        dscompile {
+            extendsFrom compile
+        }
+    }
 
     dependencies {
         testCompile "junit:junit:$versions.junit",
                     'org.mockito:mockito-all:1.8.4'
+
+        dscompile "org.apache.felix:org.apache.felix.scr.ant:$versions.felixscrant",
+                "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
+                'org.osgi:org.osgi.compendium:4.3.1'
+
 
     }
     // Restore status after Java plugin
@@ -27,7 +38,9 @@ subprojects { project ->
     task genscr(dependsOn: compileJava) << {
         ant.taskdef(resource: 'scrtask.properties',
                 classpath: configurations.dscompile.asPath )
-        ant.scr(srcdir: 'src/main/java', destdir: 'build/classes/main',
+        ant.scr(srcdir: 'src/main/java',
+                destdir: 'build/classes/main',
+                generateAccessors: true,
                 classpath: configurations.dscompile.asPath)
     }
 

@@ -10,7 +10,6 @@ import javax.ws.rs.Produces;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.ReferenceCardinality;
-import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
@@ -73,7 +72,7 @@ public class Resource {
     public static final String CONTEXT = "resource";
     private static Logger logger = LoggerFactory.getLogger(Resource.class);
 
-    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_UNARY)
+    @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
     private ConfigurationAdmin configurationAdmin;
 
     /**
@@ -106,24 +105,6 @@ public class Resource {
     @Produces("application/json")
     public String getConfig() throws Exception {
         return (String) this.configurationAdmin.getConfiguration("com.eclipsesource.jaxrs.connector").getProperties().get("root");
-    }
-
-    /**
-     * Bind method for Declarative Services.
-     * @param svc Service to bind
-     */
-    public synchronized void bindConfigurationAdmin(ConfigurationAdmin svc) {
-        configurationAdmin = svc;
-    }
-
-    /**
-     * Unbind method for Declarative Services.
-     * @param svc Service to unbind
-     */
-    public synchronized void unbindConfigurationAdmin(ConfigurationAdmin svc) {
-        if (svc == configurationAdmin) {
-            configurationAdmin = null;
-        }
     }
 
     /**
