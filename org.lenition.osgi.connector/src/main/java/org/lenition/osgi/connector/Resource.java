@@ -1,4 +1,4 @@
-package org.lenition.osgi;
+package org.lenition.osgi.connector;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
