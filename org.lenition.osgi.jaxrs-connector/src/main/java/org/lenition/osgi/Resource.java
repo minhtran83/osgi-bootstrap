@@ -11,6 +11,7 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.ReferenceCardinality;
 import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,6 @@ import java.util.Dictionary;
 
 /**
  * Registered with osgi-jaxrs-connector.
- * Alternatively, use the whiteboard pattern
- * http://svn.apache.org/repos/asf/felix/trunk/http/samples/whiteboard/
- * Another whiteboard example using DependencyActivatorBase at http://vimeo.com/45035108, 7:00 and 13:30
- *
- * Also see https://source.everit.biz/viewvc/everit-osgi/tags/osgi-0.8.0/samples/jaxrs/
  *
  * osgi-jaxrs-connector causes an intermittent start order dependencies. If the resource isn't
  * activated when jax-rs starts, it will cause an error:
@@ -58,8 +54,6 @@ import java.util.Dictionary;
  ttpContext=DefaultHttpContext{bundle=com.eclipsesource.jaxrs.connector [5]},contextParams={}}}]
  [CM Configuration Updater (Update: pid=com.eclipsesource.jaxrs.connector)] DEBUG org.eclipse.jetty.util.log - Container org.ops4j.pax.web.service.jetty.internal
  .JettyServerHandlerCollection@35ead007 + HttpServiceContext{httpContext=null} as handler
-
-
  */
 @Component
 @Service(Resource.class)
@@ -104,7 +98,14 @@ public class Resource {
     @Path("config")
     @Produces("application/json")
     public String getConfig() throws Exception {
-        return (String) this.configurationAdmin.getConfiguration("com.eclipsesource.jaxrs.connector").getProperties().get("root");
+        StringBuilder sb = new StringBuilder();
+        for (Configuration configuration : this.configurationAdmin.listConfigurations(null)) {
+            sb.append(configuration.getPid() + " : " + configuration.getBundleLocation() + "\n");
+            for (String key : Collections.list(configuration.getProperties().keys())) {
+                sb.append("           " + key + " : " + configuration.getProperties().get(key) + "\n");
+            }
+        }
+        return sb.toString();
     }
 
     /**

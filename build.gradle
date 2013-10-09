@@ -35,7 +35,7 @@ apply from: file('gradle/convention.gradle')
 apply from: file('gradle/check.gradle')
 
 
-project('jaxrs-connector') {
+project('org.lenition.osgi.jaxrs-connector') {
 
     dependencies {
         compile 'org.osgi:org.osgi.core:4.3.0',
@@ -45,7 +45,6 @@ project('jaxrs-connector') {
                 "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
                 "com.google.guava:guava:$versions.guava",
                 'org.osgi:org.osgi.compendium:4.3.1'
-
     }
 
     jar.dependsOn(genscr)
@@ -61,7 +60,7 @@ project('jaxrs-connector') {
                     'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
                     '*'
             instruction 'Export-Package', '*'
-            instruction 'Private-Package', '*'
+            instruction 'Private-Package', 'org.lenition.osgi.*'
             instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
             attributes 'Built-By': gradle.gradleVersion
             //instruction 'Build-Version', '0.0'

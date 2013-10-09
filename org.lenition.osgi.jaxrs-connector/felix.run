@@ -9,9 +9,9 @@
 #--profiles=felix.webconsole/3.0.0, web/0.7.2
 #--version=4.0.0
 #--startLevel=25
---workingDirectory=runner-jaxrs-connector
+--workingDirectory=runner-org.lenition.osgi.jaxrs-connector
 #--ee=OSGi/Minimum-1.0,OSGi/Minimum-1.1,OSGi/Minimum-1.0,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5
---vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dfelix.fileinstall.dir=../jaxrs-connector/src/main/config -Dfelix.fileinstall.disableConfigSave=true
+--vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dfelix.fileinstall.dir=../org.lenition.osgi.jaxrs-connector/src/main/config -Dfelix.fileinstall.disableConfigSave=true
 #--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
 #--profilesRepositories=file:C:/projects/src/paxrunner_samples/runner-repository
 
@@ -51,13 +51,11 @@ scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
 
 #### Third Party Libraries Provisioning ####
-#mvn:org.apache.cxf.dosgi.samples/cxf-dosgi-ri-samples-greeter-rest-client/1.2@20
-#mvn:org.apache.cxf.dosgi.samples/cxf-dosgi-ri-samples-greeter-rest-interface/1.2@20
 scan-bundle:mvn:com.google.code.gson/gson/2.2.2@20
 scan-bundle:mvn:com.google.guava/guava/15.0@20
 
 
 #### Primary JAR Provisioning ####
-file:jaxrs-connector/build/libs/jaxrs-connector.jar@update
+file:org.lenition.osgi.jaxrs-connector/build/libs/org.lenition.osgi.jaxrs-connector.jar@update
 
 

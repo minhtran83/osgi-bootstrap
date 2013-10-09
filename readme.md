@@ -9,7 +9,7 @@ gradlew build
 ```
 
 ```
-pax-run --log=debug --args=file:jaxrs-connector/felix.run
+pax-run --log=debug --args=file:org.lenition.osgi.jaxrs-connector/felix.run
 ```
 or
 ```
@@ -21,7 +21,7 @@ pax-run --log=debug --args=file:simple-service/felix.run
 
 Service Frameworks, Tools and Component Models
 ==========
-|                      | /jaxrs-connector  | /whiteboard | /simple-service  |
+|                      | /org.lenition.osgi.jaxrs-connector  | /whiteboard | /simple-service  |
 | -------------------- |-------------------|-------------|-------------|
 | osgi-jax-rs-connector| yes               |             |
 | whiteboard pattern   |                   |  yes        |

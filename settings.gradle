@@ -1,4 +1,4 @@
 rootProject.name='osgi-bootstrap'
-include 'jaxrs-connector'
+include 'org.lenition.osgi.jaxrs-connector'
 include 'whiteboard'
 include 'simple-service'
