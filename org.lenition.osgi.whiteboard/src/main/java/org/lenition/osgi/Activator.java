@@ -7,6 +7,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.Servlet;
 import javax.ws.rs.core.Application;
+import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -73,10 +75,21 @@ public class Activator implements BundleActivator {
     private class Customizer implements ServiceTrackerCustomizer {
 
         private Dictionary<String, String> createProps(ServiceReference reference) {
-            String alias = reference.getProperty("alias").toString();
-            logger.debug("Alias: " + alias);
-
             Dictionary<String, String> props = new Hashtable<String, String>();
+            String alias = null;
+            if (reference.getProperty("alias") != null) {
+                alias = reference.getProperty("alias").toString();
+            } else {
+                try {
+                    ServiceReference ref = context.getServiceReference(ConfigurationAdmin.class);
+                    ConfigurationAdmin configurationAdmin = (ConfigurationAdmin)context.getService(ref);
+                    org.osgi.service.cm.Configuration config = configurationAdmin.getConfiguration(Configuration.CONFIG_SERVICE_PID);
+                    alias = config.getProperties().get(Configuration.ROOT_PROPERTY).toString();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            logger.debug("Alias: " + alias);
             props.put("alias", alias);
             return props;
         }

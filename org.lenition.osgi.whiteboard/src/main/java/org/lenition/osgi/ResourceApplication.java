@@ -1,5 +1,6 @@
 package org.lenition.osgi;
 
+import com.sun.jersey.api.core.DefaultResourceConfig;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Properties({
         @Property(name = "alias", value = "/root")
 })
-public class ResourceApplication extends Application {
+public class ResourceApplication extends DefaultResourceConfig {
 
     private final Set<Class<?>> resources  = new java.util.HashSet<Class<?>>();
 
