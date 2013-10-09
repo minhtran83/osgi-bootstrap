@@ -108,36 +108,8 @@ project('org.lenition.osgi.whiteboard') {
     }
 }
 
-//project('web-bundle') {
-//    dependencies {
-//        compile 'org.osgi:org.osgi.core:4.3.0',
-////                "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
-//                "com.sun.jersey:jersey-bundle:$versions.jersey",
-////                "com.google.code.gson:gson:$versions.gson",
-//                "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
-////                "com.google.guava:guava:$versions.guava",
-//                'org.osgi:org.osgi.compendium:4.3.1',
-//                "javax.servlet:servlet-api:2.5"
-//    }
-//
-//    jar.dependsOn(genscr)
-//
-//    jar {
-//        manifest {
-//            version = '1.0.0'
-//            name = 'Demo Bundle 2'
-//            instruction 'Bundle-Activator', 'net.codersbrew.gradle.demo.bundle.two.Activator'
-//            instruction 'Import-Package', '*'
-//            instruction 'Export-Package', '!org.lenition.osgi.simple.impl'
-//            attributes 'Built-By': gradle.gradleVersion
-//        }
-//    }
-//
-//}
 
-
-
-project('simple-service') {
+project('org.lenition.osgi.simple-service') {
     dependencies {
         compile 'org.osgi:org.osgi.core:4.3.0',
                 "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
