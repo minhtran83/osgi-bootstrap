@@ -1,3 +1,4 @@
 rootProject.name='osgi-bootstrap'
 include 'jaxrs-connector'
 include 'whiteboard'
+include 'simple-service'

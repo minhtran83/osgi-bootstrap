@@ -9,6 +9,8 @@ subprojects { project ->
 
     repositories {
         mavenCentral()
+        maven { url "http://svn.apache.org/repos/asf/servicemix/m2-repo" }
+        maven { url "http://repo.fusesource.com/nexus/content/groups/public" }
     }
 
     /** Configuration for SCR task **/
