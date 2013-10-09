@@ -72,7 +72,7 @@ project('org.lenition.osgi.jaxrs-connector') {
 
 
 
-project('whiteboard') {
+project('org.lenition.osgi.whiteboard') {
     dependencies {
         compile 'org.osgi:org.osgi.core:4.3.0',
                 "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
