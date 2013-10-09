@@ -53,8 +53,6 @@ Challenges:
 
 
 TODO:
-create subproject build.gradles
-rename subprojects to org.lenition.osgi....
 http://aries.apache.org/
 http://my.safaribooksonline.com/book/programming/java/9781617290138/chapter-4dot-packaging-your-enterprise-osgi-applications/ch04lev1sec3_html
 http://pic.dhe.ibm.com/infocenter/wasinfo/v7r0/index.jsp?topic=%2Fcom.ibm.websphere.osgifep.multiplatform.doc%2Ftopics%2Fthread_ta_dev_createapp.html
