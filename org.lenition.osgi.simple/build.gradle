@@ -3,7 +3,6 @@ dependencies {
             "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
             "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
             'org.apache.felix:org.apache.felix.gogo.runtime:0.10.0',
-            'org.apache.felix:org.apache.felix.shell:1.4.3',
             'org.osgi:org.osgi.compendium:4.3.1'
 }
 

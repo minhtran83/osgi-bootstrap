@@ -36,9 +36,6 @@ scan-bundle:mvn:org.apache.felix/org.apache.felix.gogo.runtime/0.10.0
 #### Declarative Services ####
 scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
 
-#### Felix Shell - Displays in WebConsole, separate from GoGo/Karaf shell ####
-scan-bundle:mvn:org.apache.felix/org.apache.felix.shell/1.4.3
-
 #### Karaf Shell ####
 # add options: -Dkaraf.startLocalConsole=true -Dkaraf.startRemoteShell=true
 #scan-bundle:mvn:org.apache.felix.karaf.shell/org.apache.felix.karaf.shell.console/1.6.0

@@ -52,7 +52,7 @@ Challenges:
 
 
 TODO:
-Make consumer for simple service
+get configadmin working for all projects
 http://aries.apache.org/
 http://my.safaribooksonline.com/book/programming/java/9781617290138/chapter-4dot-packaging-your-enterprise-osgi-applications/ch04lev1sec3_html
 

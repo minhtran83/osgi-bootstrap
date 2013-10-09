@@ -7,10 +7,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import com.google.gson.Gson;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.ReferenceCardinality;
+import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
+import org.lenition.osgi.simple.PropertiesService;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
@@ -70,6 +73,12 @@ public class Resource {
     private ConfigurationAdmin configurationAdmin;
 
     /**
+     * Optional, dynamic reference to PropertiesService. Dyanamic policy is necessary for optional references.
+     */
+    @Reference(cardinality = ReferenceCardinality.OPTIONAL_UNARY, policy = ReferencePolicy.DYNAMIC)
+    private PropertiesService propertiesService;
+
+    /**
      * Default (root) GET.
      * @return HTTP response string
      * @throws Exception
@@ -106,6 +115,22 @@ public class Resource {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Returns system properties.
+     * @return JSON document of system properties
+     * @throws Exception
+     */
+    @GET
+    @Path("properties")
+    @Produces("application/json")
+    public String getProperties() throws Exception {
+        if (this.propertiesService == null) {
+            return "{\"success\" : false}";
+        } else {
+            return (new Gson()).toJson(this.propertiesService.get());
+        }
     }
 
     /**

@@ -24,10 +24,17 @@ import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * Another method for providing a shell command.
+ * A method for providing a shell command.
  * See http://felix.apache.org/site/rfc-147-overview.html
  * and
  * http://felix.apache.org/site/apache-felix-dependency-manager-using-annotations-quick-tour.html
+ *
+ *
+ * Alternatively, one can create a simple command class for the felix shell
+ * (org.apache.felix/org.apache.felix.shell/x.x.x). This shell displays
+ * as a Felix WebConsole tab, and is separate from the GoGo or Karaf shells.
+ * see http://felix.apache.org/site/apache-felix-shell.html
+ *
  */
 @Component
 @Service

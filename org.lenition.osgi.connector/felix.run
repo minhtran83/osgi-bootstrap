@@ -58,4 +58,7 @@ scan-bundle:mvn:com.google.guava/guava/15.0@20
 #### Primary JAR Provisioning ####
 file:org.lenition.osgi.connector/build/libs/org.lenition.osgi.connector.jar@update
 
+#### Optional JAR Provisioning ####
+file:org.lenition.osgi.simple/build/libs/org.lenition.osgi.simple.jar@update
+
 

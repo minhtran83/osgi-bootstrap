@@ -4,7 +4,6 @@ import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.scr.annotations.Reference;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.lenition.osgi.simple.PropertiesService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -21,6 +20,7 @@ public class PropertiesServiceTest  {
 
     private final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
     private CountDownLatch latch;
+    private static final int DEFAULT_WAIT_SECONDS = 10;
 
     @Reference
     private PropertiesService propertiesService;
@@ -34,7 +34,7 @@ public class PropertiesServiceTest  {
                 .add(dm.createServiceDependency()
                 .setService(PropertiesService.class)));
         try {
-            latch.await(10, TimeUnit.SECONDS);
+            latch.await(DEFAULT_WAIT_SECONDS, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             fail("Service dependencies were not injected.");
         }

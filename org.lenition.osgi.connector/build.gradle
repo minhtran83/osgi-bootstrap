@@ -6,6 +6,8 @@ dependencies {
             "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
             "com.google.guava:guava:$versions.guava",
             'org.osgi:org.osgi.compendium:4.3.1'
+
+    compile project(':org.lenition.osgi.simple')
 }
 
 jar.dependsOn(genscr)
