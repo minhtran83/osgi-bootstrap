@@ -24,33 +24,17 @@ scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.1
 
 #### Apache Felix Utiltiies ####
 #### localhost:8080/system/console ####
-scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
+# note: ConfigInstaller.init() has a start-order dependency
+scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.6.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.fileinstall/3.2.6
-scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0
+scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
 scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.gogo.runtime/0.10.0
 
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.0.2@5
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/1.0.0@5
 
 #### Declarative Services ####
 scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
 
-#### Karaf Shell ####
-# add options: -Dkaraf.startLocalConsole=true -Dkaraf.startRemoteShell=true
-#scan-bundle:mvn:org.apache.felix.karaf.shell/org.apache.felix.karaf.shell.console/1.6.0
-#scan-bundle:mvn:org.fusesource.jansi/jansi/1.9
-#scan-bundle:mvn:jline/jline/2.9
-#scan-bundle:mvn:org.apache.karaf.jaas/org.apache.karaf.jaas.boot/3.0.0.RC1
-#scan-bundle:mvn:org.apache.felix.gogo/org.apache.felix.gogo.runtime/0.4.0
-#scan-bundle:mvn:org.apache.felix.gogo/org.apache.felix.gogo.commands/0.4.0
-
-#### Blueprint ####
-#scan-bundle:mvn:org.apache.aries.blueprint/org.apache.aries.blueprint/0.4
-#scan-bundle:mvn:org.apache.aries.proxy/org.apache.aries.proxy/0.4
-#scan-bundle:mvn:org.apache.aries/org.apache.aries.util/0.4
-
 #### Primary JAR Provisioning ####
 file:org.lenition.osgi.simple/build/libs/org.lenition.osgi.simple.jar@update
-
 

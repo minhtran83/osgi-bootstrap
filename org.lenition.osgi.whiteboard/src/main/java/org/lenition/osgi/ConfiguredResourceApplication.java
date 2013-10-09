@@ -16,14 +16,16 @@ import java.util.Set;
 @Properties({
         @Property(name = "alias", value = "/root2")
 })
-public class OtherResourceApplication extends Application {
+public class ConfiguredResourceApplication extends Application {
+
+    // TODO: DEFAULT RESOURCE CONFIG
 
     private final Set<Class<?>> resources  = new java.util.HashSet<Class<?>>();
 
     /**
      * Default constructor.
      */
-    public OtherResourceApplication() {
+    public ConfiguredResourceApplication() {
         resources.add(Resource.class);
     }
 

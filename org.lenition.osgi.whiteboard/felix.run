@@ -35,9 +35,10 @@ scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
 
 #### Apache Felix Utiltiies ####
 #### localhost:8080/system/console ####
-scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
+# note: ConfigInstaller.init() has a start-order dependency
+scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.6.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.fileinstall/3.2.6
-scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0
+scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
 scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.http.whiteboard/2.2.1
 scan-bundle:mvn:org.apache.felix/org.apache.felix.http.api/2.2.1

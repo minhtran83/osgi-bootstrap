@@ -102,3 +102,31 @@ Dynamic Classloading:
 - Long-term fix
    - Client passes class or classloader to framework
 """"""
+
+
+
+
+#### Karaf Shell ####
+# add options: -Dkaraf.startLocalConsole=true -Dkaraf.startRemoteShell=true
+#scan-bundle:mvn:org.apache.felix.karaf.shell/org.apache.felix.karaf.shell.console/1.6.0
+#scan-bundle:mvn:org.fusesource.jansi/jansi/1.9
+#scan-bundle:mvn:jline/jline/2.9
+#scan-bundle:mvn:org.apache.karaf.jaas/org.apache.karaf.jaas.boot/3.0.0.RC1
+#scan-bundle:mvn:org.apache.felix.gogo/org.apache.felix.gogo.runtime/0.4.0
+#scan-bundle:mvn:org.apache.felix.gogo/org.apache.felix.gogo.commands/0.4.0
+
+#### Blueprint ####
+#scan-bundle:mvn:org.apache.aries.blueprint/org.apache.aries.blueprint/0.4
+#scan-bundle:mvn:org.apache.aries.proxy/org.apache.aries.proxy/0.4
+#scan-bundle:mvn:org.apache.aries/org.apache.aries.util/0.4
+
+
+#scan-bundle:mvn:org.osgi/org.osgi.compendium/4.3.1
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.0.2@5
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/1.0.0@5
+
+#### Pax Web (HTTP Service, WAB support, JSP support) ####
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-api/2.1.2
+scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-extender-war/2.1.2
+#scan-bundle:mvn:org.ops4j.pax.web/pax-web-jsp/2.1.2

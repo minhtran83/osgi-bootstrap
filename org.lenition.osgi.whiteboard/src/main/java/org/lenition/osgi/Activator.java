@@ -60,6 +60,10 @@ public class Activator implements BundleActivator {
         configRegistration = null;
     }
 
+    /**
+     * Binds configuration to bundle.
+     * @param context
+     */
     private void registerConfiguration(BundleContext context) {
         Dictionary<String, String> properties = new Hashtable<String, String>();
         properties.put(Constants.SERVICE_PID, Configuration.CONFIG_SERVICE_PID);

@@ -46,7 +46,6 @@ subprojects { project ->
                 classpath: configurations.dscompile.asPath)
     }
 
-
     task sourcesJar(type: Jar, dependsOn:classes) {
         from sourceSets.main.allSource
         classifier 'sources'
@@ -71,9 +70,7 @@ subprojects { project ->
             // Weird Gradle quirk where type will be used for the extension, but only for sources
             type 'jar'
         }
-        javadoc(javadocJar) {
-            type 'javadoc'
-        }
+        javadoc(javadocJar)
     }
 
     configurations {

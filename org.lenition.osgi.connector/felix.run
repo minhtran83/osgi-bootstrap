@@ -15,9 +15,6 @@
 #--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
 #--profilesRepositories=file:C:/projects/src/paxrunner_samples/runner-repository
 
-#### GSON ####
-#scan-bundle:mvn:com.google.code.gson/gson/2.2.2
-
 #### Jersy JAX-RS ####
 scan-bundle:mvn:com.sun.jersey/jersey-core/1.17
 scan-bundle:mvn:com.sun.jersey/jersey-servlet/1.17
@@ -31,21 +28,15 @@ scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.1
 scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.1
 
 #### Pax Web (HTTP Service, WAB support, JSP support) ####
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-api/2.1.2
 scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-extender-war/2.1.2
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-jsp/2.1.2
 
 #### Apache Felix Utiltiies ####
 #### localhost:8080/system/console ####
-scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
+# note: ConfigInstaller.init() has a start-order dependency
+scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.6.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.fileinstall/3.2.6
-scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0
+scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
 scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
-
-#scan-bundle:mvn:org.osgi/org.osgi.compendium/4.3.1
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.0.2@5
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/1.0.0@5
 
 #### Declarative Services ####
 scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
@@ -53,7 +44,6 @@ scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
 #### Third Party Libraries Provisioning ####
 scan-bundle:mvn:com.google.code.gson/gson/2.2.2@20
 scan-bundle:mvn:com.google.guava/guava/15.0@20
-
 
 #### Primary JAR Provisioning ####
 file:org.lenition.osgi.connector/build/libs/org.lenition.osgi.connector.jar@update
