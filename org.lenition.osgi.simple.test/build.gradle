@@ -1,0 +1,31 @@
+dependencies {
+    compile 'org.osgi:org.osgi.core:4.3.0',
+            "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
+            "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
+            'org.apache.felix:org.apache.felix.gogo.runtime:0.10.0',
+            'org.apache.felix:org.apache.felix.shell:1.4.3',
+            'org.osgi:org.osgi.compendium:4.3.1',
+            "junit:junit:$versions.junit",
+            'org.apache.felix:org.apache.felix.dependencymanager:3.1.0',
+            project(':org.lenition.osgi.simple')
+}
+
+jar.dependsOn(genscr)
+
+jar {
+    manifest {
+        version = '0.0.1'
+        name = 'org.lenition.osgi.simple.test'
+
+        instruction 'Import-Package',
+                'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
+                '*'
+        instruction 'Export-Package', '*'
+        instruction 'Private-Package', '*'
+        instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
+        attributes 'Built-By': gradle.gradleVersion
+        //instruction 'Build-Version', '0.0'
+        //instruction 'Build-Repo-BranchName', 'origin'
+        //instruction 'Build-Repo-CurrentCommitHash', '0001'
+    }
+}

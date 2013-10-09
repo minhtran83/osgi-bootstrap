@@ -1,0 +1,59 @@
+#########################################
+# Pax Runner Profile                    #
+#########################################
+
+#### Options ####
+--p=felix
+# profiles list: http://repository.ops4j.org/maven2/org/ops4j/pax/runner/profiles/
+# profiles often have much older versions: felix.webconsole/3.0.0/composite included pax-logging 1.6.1
+#--profiles=felix.webconsole/3.0.0, web/0.7.2
+#--version=4.0.0
+#--startLevel=25
+--workingDirectory=runner-org.lenition.osgi.simple
+#--ee=OSGi/Minimum-1.0,OSGi/Minimum-1.1,OSGi/Minimum-1.0,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5
+--vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dfelix.fileinstall.dir=../org.lenition.osgi.simple/src/main/config -Dfelix.fileinstall.disableConfigSave=true
+#--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
+#--profilesRepositories=file:C:/projects/src/paxrunner_samples/runner-repository
+
+#### Pax Web (HTTP Service, WAB support, JSP support) ####
+scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
+
+#### Pax Logging ####
+scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.1
+scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.1
+
+#### Apache Felix Utiltiies ####
+#### localhost:8080/system/console ####
+scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
+scan-bundle:mvn:org.apache.felix/org.apache.felix.fileinstall/3.2.6
+scan-bundle:mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0
+scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
+scan-bundle:mvn:org.apache.felix/org.apache.felix.gogo.runtime/0.10.0
+
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.0.2@5
+#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/1.0.0@5
+
+#### Declarative Services ####
+scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
+
+#### Felix Shell - Displays in WebConsole, separate from GoGo/Karaf shell ####
+scan-bundle:mvn:org.apache.felix/org.apache.felix.shell/1.4.3
+
+#### Karaf Shell ####
+# add options: -Dkaraf.startLocalConsole=true -Dkaraf.startRemoteShell=true
+#scan-bundle:mvn:org.apache.felix.karaf.shell/org.apache.felix.karaf.shell.console/1.6.0
+#scan-bundle:mvn:org.fusesource.jansi/jansi/1.9
+#scan-bundle:mvn:jline/jline/2.9
+#scan-bundle:mvn:org.apache.karaf.jaas/org.apache.karaf.jaas.boot/3.0.0.RC1
+#scan-bundle:mvn:org.apache.felix.gogo/org.apache.felix.gogo.runtime/0.4.0
+#scan-bundle:mvn:org.apache.felix.gogo/org.apache.felix.gogo.commands/0.4.0
+
+#### Blueprint ####
+#scan-bundle:mvn:org.apache.aries.blueprint/org.apache.aries.blueprint/0.4
+#scan-bundle:mvn:org.apache.aries.proxy/org.apache.aries.proxy/0.4
+#scan-bundle:mvn:org.apache.aries/org.apache.aries.util/0.4
+
+#### Primary JAR Provisioning ####
+file:org.lenition.osgi.simple/build/libs/org.lenition.osgi.simple.jar@update
+
+

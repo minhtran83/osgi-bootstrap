@@ -21,8 +21,8 @@ pax-run --log=debug --args=file:simple-service/felix.run
 
 Service Frameworks, Tools and Component Models
 ==========
-|                      | /org.lenition.osgi.jaxrs-connector  | /whiteboard | /simple-service  |
-| -------------------- |-------------------|-------------|-------------|
+|                      | /org.lenition.osgi.jaxrs-connector  | /whiteboard | /simple  |
+| -------------------- |-------------------|-------------|-------------|--------------|
 | osgi-jax-rs-connector| yes               |             |
 | whiteboard pattern   |                   |  yes        |
 | SCR/DS               | yes               |  yes         |     yes       |
@@ -49,14 +49,16 @@ Best Practices:
 Challenges:
  - bundlize transitive dependencies
  - avoid split packages and duplicate classes (build tool to detect)
- -
 
 
 TODO:
+Make consumer for simple service
 http://aries.apache.org/
 http://my.safaribooksonline.com/book/programming/java/9781617290138/chapter-4dot-packaging-your-enterprise-osgi-applications/ch04lev1sec3_html
-http://pic.dhe.ibm.com/infocenter/wasinfo/v7r0/index.jsp?topic=%2Fcom.ibm.websphere.osgifep.multiplatform.doc%2Ftopics%2Fthread_ta_dev_createapp.html
-http://stackoverflow.com/questions/9316578/creating-a-complete-osgi-application-with-felix-maven
+
+BndTools:
+https://bitbucket.org/amdatu/showcase/src/1e078853256ef1088295f9d3df246ce8b113d8aa/build.gradle?at=master
+https://github.com/tux2323/bndtools-gradle-demo
 
 
 WAB:
@@ -81,9 +83,6 @@ http://cxf.apache.org/distributed-osgi-reference.html#DistributedOSGiReference-D
 
 IntelliJ plugins:
 http://plugins.jetbrains.com/plugin/?webide&id=7009
-
-BndTools:
-https://github.com/tux2323/bndtools-gradle-demo
 
 Karaf shell:
 http://icodebythesea.blogspot.com/2011/11/creating-your-own-apache-karaf-console.html
