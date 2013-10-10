@@ -3,6 +3,7 @@
 ext {
     githubProjectName = 'osgi-bootstrap'
     versions = [
+            osgi                   : '4.3.1',
             junit                  : '4.11',
             paxlogging             : '1.7.1',
             felixscr               : '1.9.6',

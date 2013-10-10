@@ -3,11 +3,11 @@ dependencies {
     /**
      * External module dependencies
      */
-    compile 'org.osgi:org.osgi.core:4.3.1',
+    compile "org.osgi:org.osgi.core:$versions.osgi",
+            "org.osgi:org.osgi.compendium:$versions.osgi",
             "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
             "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
             'org.apache.felix:org.apache.felix.gogo.runtime:0.10.0',
-            'org.osgi:org.osgi.compendium:4.3.1',
             "biz.aQute:bndlib:$versions.bndlib"
 
     /**
