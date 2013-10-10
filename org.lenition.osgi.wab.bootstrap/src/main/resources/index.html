@@ -1,0 +1,2452 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 (experimental) for Linux https://github.com/w3c/tidy-html5/tree/c63cc39">
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+  <meta charset="utf-8">
+
+  <title>BlueButton+ Pull API, Dynamic Registration and Push
+  Authorization</title>
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content=""><!-- Le styles -->
+  <link href="assets/css/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-responsive.css" rel=
+  "stylesheet">
+  <link href="assets/css/docs.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/gh-fork-ribbon.css">
+  <!--[if IE]>
+        <link rel="stylesheet" href="assets/css/gh-fork-ribbon.ie.css" />
+    <![endif]-->
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar"
+data-twttr-rendered="true">
+  <div class="github-fork-ribbon-wrapper right">
+    <div class="github-fork-ribbon">
+      <a href=
+      "https://github.com/blue-button/blue-button-plus-pull">Fork
+      me on GitHub</a>
+    </div>
+  </div><!-- Navbar
+      ================================================== -->
+  <!-- Subhead
+      ================================================== -->
+
+  <header class="jumbotron subhead" id="overview">
+    <div class="container">
+      <h1>BlueButton+ Pull API</h1>
+
+      <p class="lead">OAuth2 API for RESTful access to patient data
+      and bootstrapping DIRECT-based information exchange</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Docs nav
+        ================================================== -->
+
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav" data-offset-top=
+        "200">
+          <li>
+            <a href="#registration"><i class=
+            "icon-chevron-right"></i> App Registration <span class=
+            "label section label-success">Common</span></a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#client-types"><i class=
+            "icon-chevron-right"></i> Client Types</a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#registration-open"><i class=
+            "icon-chevron-right"></i> Open Registration</a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#registration-trusted"><i class=
+            "icon-chevron-right"></i> Trusted Registration</a>
+          </li>
+
+          <li>
+            <a href="#discovery"><i class="icon-chevron-right"></i>
+            Endpoint Discovery <span class=
+            "label section label-success">Common</span></a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#discovery-registry"><i class=
+            "icon-chevron-right"></i> BB+ Registries</a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#discovery-providers"><i class=
+            "icon-chevron-right"></i>Registered Providers</a>
+          </li>
+
+         <li class="sidenav-indent">
+            <a href="#discovery-apps"><i class=
+            "icon-chevron-right"></i>Registered Apps</a>
+          </li>
+          
+          <li>
+            <a href="#scopes"><i class=
+            "icon-chevron-right"></i> Standard Scopes
+            <span class="label section label-success">Common</span></a>
+          </li>
+
+          <li>
+            <a href="#authorization"><i class=
+            "icon-chevron-right"></i> App Authorization
+            <span class="label section label-info">Pull</span></a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#authorization-code"><i class=
+            "icon-chevron-right"></i> Authorization Code Grant</a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#authorization-implicit"><i class=
+            "icon-chevron-right"></i> Implicit Grant</a>
+          </li>
+
+          <li>
+            <a href="#clinical-api"><i class="icon-chevron-right"></i>
+            Clinical Data API <span class=
+            "label section label-info">Pull</span> </a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#clinical-summary"><i class=
+            "icon-chevron-right"></i> Clinical Summary</a>
+          </li>
+
+          <li class="sidenav-indent">
+            <a href="#clinical-search"><i class=
+            "icon-chevron-right"></i> Document Search</a>
+          </li>
+
+
+          <li class="sidenav-indent">
+            <a href="#clinical-document-retrieval"><i class=
+            "icon-chevron-right"></i> Document Retrieval</a>
+          </li>
+
+          <li>
+            <a href="#push-authorization"><i class=
+            "icon-chevron-right"></i> Push Authorization
+            <span class=
+            "label section label-warning">Push</span></a>
+          </li>
+
+          <li>
+            <a href="#demo"><i class=
+            "icon-chevron-right"></i> Demo App</a>
+          </li>
+
+          <li>
+            <a href="#authors"><i class=
+            "icon-chevron-right"></i> Authors</a>
+          </li>
+	</ul>
+      </div>
+
+      <div class="span7">
+        <section id="explanation">
+          <div class="well alert-info">
+            <strong>Note:</strong> This page documents
+            specifications applicable to both BB+ <span class=
+            "label section label-warning">Push</span> (Direct email
+            transport) and BB+ <span class=
+            "label section label-info">Pull</span> (HTTP RESTful
+            transport) protocols. It is the goal of this proposal
+            to re-use <span class=
+            "label section label-success">Common</span> components
+            for Push and Pull apps. In this way, a system
+            implementing both would be able to re-use the same code
+            and patterns for common activities such as end-user
+            authorization, dynamic client registration, and service
+            discovery.
+          </div>
+        </section>
+
+        <section id="registration">
+          <div class="page-header">
+            <h1>App Registration <small>up-front,
+            partially-automated</small> <span class=
+            "label label-success">Common</span></h1></div>
+
+            <p>Before an app connects to a BlueButton+ provider, it
+            registers with that provider as an OAuth2 Client. The
+            registration process informs the provider what the app
+            is called, where to find it, what permissions it might
+            ask patients for, and how to display an authorization
+            screen to patients.</p>
+
+            <p>BB+ apps register with providers using <a href=
+            "http://tools.ietf.org/html/draft-ietf-oauth-dyn-reg">OAuth2
+            Dynamic Client Registration</a>. This guide walks
+            through the process of registering a client using open
+            registration, as well as an example of using trusted
+            registration which leverages BB+ Registries.</p>
+            
+            <h2 id="client-types">Client Types</h2>
+            
+            <p>BlueButton+ allows for several different types of clients and use cases that are differentiated along two axes: whether or not a client can reasonably guard its <code>client_secret</code> at runtime, and whether or not it can guard its <code>registration_jwt</code> at runtime (if it has one). The OAuth 2 specification defines the former class distinction as "confidential" and "public" clients, but there is not existing terminology for the latter classification. This combination leads us to a matrix of six possible application styles:</p>
+        <small>    
+            <table class="table table-bordered table-hover">
+                        
+	      <tr>
+		<td></td>
+		<th> Can guard <code>client_secret</code></th>
+		<th> Can <strong>NOT</strong> guard <code>client_secret</code></th>
+	      </tr>
+	      
+	      <tr>
+		<th> Can guard <code>registration_jwt</code></th>
+    <td><a href="#clients-trusted-confidential"> Trusted Confidential App</a></td>
+    <td><a href="#clients-trusted-public"> Trusted Public App</a></td>
+	      </tr>
+	      <tr>
+		<th> Can <strong>NOT</strong> guard <code>registration_jwt</code></th>
+    <td><a href="#clients-semitrusted-confidential"> Semi-Trusted Confidential App</a></td>
+    <td><a href="#clients-semitrusted-public"> Semi-Trusted Public App</a></td>
+	      </tr>
+	      <tr>
+		<th> No <code>registration_jwt</code></th>
+    <td><a href="#clients-experimental-confidential"> Experimental Confidential App</a></td>
+    <td><a href="#clients-experimental-public"> Experimental Public App</a></td>
+	      </tr>
+	      
+            </table>
+            </small>
+            
+            <p>When deciding whether and how to register with a Registry Service, a client application developer MUST determine which of the above categories are appropriate for their application. Application developers must take care to select the appropriate category for their application based on its runtime capabilites as well as policies around the data. A Registry should help enable these distinctions by explicitly asking application develoeprs about the capabilities of their applications in order to determine which policies to apply.</p>
+            
+      <h3 id="clients-trusted-confidential"> Trusted Confidential Application</h3>
+      
+      <h5>Examples:</h5>
+      <ul>
+      <li>Web application where all API interactions between client and provider happen in the back channel ("server-side, away from the end-user"). This is the recommended mode for web-server based applications.</li>
+      <li>Native applications that can be issued a per-instance <code>registration_jwt</code> (using mechanisms outside the scope of this specification)</li>
+      </ul>
+      
+      <h5>Policies:</h5>
+      <ul>
+<li>Uses trusted registration</li>
+      <li>This is the setup with the highest assurance. Therefore authorization server can present the user with its least-scary authorization screen.</li>
+      <li>If the <code>registration_jwt</code> or <code>client_secret</code> are exposed, it should be considered a major security breach and system-wide invalidation of the application's instances (and re-provisioning of its <code>registration_jwt</code>) are reasonable and expected countermeasures.</li>
+      </ul>
+      
+	    <h3 id="clients-trusted-public" > Trusted Public Application</h3>
+	    
+      <h5>Examples:</h5>
+	    <ul>
+	    <li>Split server-side/in-browser application that handles dynamic registration in the back-end (server-side) but performs authorization in the browser (likely using implicit flow)</li>
+	    </ul>
+	    
+      <h5>Policies:</h5>
+	    <ul>
+	    <li>Uses trusted registration</li>
+	    <li>An application MUST pre-register its <code>redirect_uri</code>s at the Registry Service and the authorization server MUST enforce them.</li>
+	    <li>On the authorization page, the authorization server should disclose the name and URI of the application for users to confirm that it matches what they think they're using</li>
+	    <li>If the <code>registration_jwt</code> is exposed, it should be considered a major security breach and system-wide invalidation of the application's instances (and re-provisioning of its <code>registration_jwt</code>) are reasonable and expected countermeasures.</li>
+	    </ul>
+	    
+	    <h3 id="clients-semitrusted-confidential" > Semi-Trusted Confidential Application</h3>
+      <h5>Examples:</h5>
+	    <ul>
+	    <li>Self-sufficient native applications that register themselves separately per installation instance based on their pre-registered parameters.</li>
+	    </ul>
+	    
+      <h5>Policies:</h5>
+	    <ul>
+	    <li>Uses trusted registration</li>
+	    <li>The <code>registration_jwt</code> is packaged in with the application and is therefore available to all end-users. This means that any holder of this JWT could try to register with this application's parameters and it must not be trusted for access without a user's explicit consent.</li>
+	    <li>Authorizations servers MUST present users with the name and URI of the application that is being authorized and appropriately caution users.</li>
+	    <li>An application MUST pre-register its <code>redirect_uri</code>s at the Registry Service and the authorization server MUST enforce them.</li>
+	    <li>An application SHOULD pre-register as many parameters as possible at the Registry Service and the authorization server MUST enforce them.</li>
+	    </ul>
+
+	    <h3 id="clients-semitrusted-public" > Semi-Trusted Public Application</h3>
+      <h5>Examples:</h5>
+	    <ul>
+	    <li>In-browser javascript applications that handle dynamic registration and authorization (using the implicit flow) on their own</li>
+	    </ul>
+	    
+      <h5>Policies:</h5>
+	    <ul>
+	    <li>Uses trusted registration</li>
+	    <li>The <code>registration_jwt</code> is packaged in with the application and is therefore available to all end-users. This means that any holder of this JWT could try to register with this application's parameters and it must not be trusted for access without a user's explicit consent.</li>
+	    <li>Authorizations servers MUST present users with the name and URI of the application that is being authorized and appropriately caution users.</li>
+	    <li>An application SHOULD pre-register as many parameters as possible at the Registry Service and the authorization server MUST enforce them.</li>
+	    <li>This is likely to be a rare case in BB+.</li>
+	    </ul>
+
+	    <h3 id="clients-experimental-confidential" > Experimental Confidential Application</h3>
+      <h5>Examples:</h5>
+	    <ul>
+	    <li>Weekend project / prototype of a web or native client to be used by app developers, their friends, and family</li>
+	    </ul>
+	    
+      <h5>Policies:</h5>
+	    <ul>
+	    <li>Uses open registration</li>
+	    <li>Authorization page MUST display a warning to users that the identity of the application is unverified and MUST state that users should proceed only if they trust the app's presented <code>redirect_uri</code></li>
+	    <li>An authorization server MAY display statistics such as how many other users have authorized this application in order to help the user make their decision.</li>
+	    </ul>
+	    
+	    <h3 id="clients-experimental-public" > Experimental Public Application</h3>
+      <h5>Examples:</h5>
+	    <ul>
+	    <li>Weekend project / prototype of an in-browser or native client to be used by app developers, their friends, and family</li>
+	    </ul>
+	    
+      <h5>Policies:</h5>
+	    <ul>
+	    <li>Uses open registration</li>
+	    <li>Authorization page MUST display a warning to users that the identity of the application is unverified and MUST state that users should proceed only if they trust the app's presented <code>redirect_uri</code></li>
+	    <li>An authorization server MAY display statistics such as how many other users have authorized this application in order to help the user make their decision.</li>
+	    </ul>
+
+            
+
+            <h2 id="registration-open">Open
+            Registration</h2>BlueButton+ providers <strong>must offer</strong> an open
+            registration option. To register, an app issues an
+            <code>https POST</code> to the registration endpoint,
+            supplying registration parameters as a JSON object.
+
+            <div class="well alert-info">
+              <strong>Note</strong>: Open registration is
+              appropriate for new and experimental apps, but
+              patient-facing authorization screens should display a
+              warning indicating that an app's identity has not
+              been verified. To provide a higher level of
+              assurance, apps can perform a Trusted Registration
+              (described below).
+            </div>
+<div class="wsd" wsd_style="napkin"><pre>
+Title: BlueButton+ Open Registration Process
+participant App
+participant Provider
+
+App-&gt;Provider: Registration Request (no JWT)
+Provider-&gt;App: client_id + secret + registration token
+            </pre></div>
+
+            <h3 id="registration-parameters">Registration
+            Parameters</h3>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Type</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>client_name</code></td>
+
+                <td><code>string</code></td>
+
+                <td>Human-readable name of the Client to be
+                presented to the user.</td>
+              </tr>
+
+              <tr>
+                <td><code>client_uri</code></td>
+
+                <td><code>string</code></td>
+
+                <td>URL of the homepage of the Client.</td>
+              </tr>
+
+              <tr>
+                <td><code>logo_uri</code></td>
+
+                <td><code>string</code></td>
+
+                <td>URL that references a logo for the Client. If
+                present, the server SHOULD display this image to
+                the end user during approval</td>
+              </tr>
+
+              <tr>
+                <td><code>tos_uri</code></td>
+
+                <td><code>string</code></td>
+
+                <td>URL that points to a human-readable Terms of
+                Service for the Client. The Authorization Server
+                SHOULD display this URL to the End-User if it is
+                given.</td>
+              </tr>
+
+              <tr>
+                <td><code>redirect_uris</code></td>
+
+                <td><code>array</code></td>
+
+                <td>Array of redirect URIs for use in the
+                Authorization Code and Implicit grant types. An
+                Authorization Server SHOULD require registration of
+                valid redirect URIs for all clients that use these
+                grant types in order to protect against token and
+                credential theft attacks.</td>
+              </tr>
+
+              <tr>
+                <td><code>response_types</code></td>
+
+                <td><code>array</code></td>
+
+                <td>
+                  Array of the OAuth 2.0 response types that the
+                  Client may use.
+
+                  <ul>
+                    <li>public clients: <code>"token"</code> or
+                    <code>"code"</code></li>
+
+                    <li>confidential clients:
+                    <code>"code"</code></li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr>
+                <td><code>token_endpoint_auth_method</code></td>
+
+                <td><code>string</code></td>
+
+                <td>
+                  The requested authentication type for the Token
+                  Endpoint.
+
+                  <ul>
+                    <li>public clients: <code>"none"</code></li>
+
+                    <li>confidential clients:
+                    <code>"client_secret_basic"</code></li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr>
+                <td><code>grant_types</code></td>
+
+                <td><code>array</code></td>
+
+                <td>
+                  Array of OAuth 2.0 grant types that the Client
+                  may use.
+
+                  <ul>
+                    <li>public clients: <code>["implicit"]</code>
+                    or <code>["authorization_code"]</code></li>
+
+                    <li>confidential clients:
+                    <code>["authorization_code"]</code></li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr>
+                <td><code>scope</code></td>
+
+                <td><code>string</code></td>
+
+                <td>Space separated list of scope values (as
+                described in OAuth 2.0 Section 3.3 [RFC6749]) that
+                the client is declaring that it may use when
+                requesting access tokens. A valid BB+ scope must
+                include one or both of:
+                <code>search</code>
+                and
+                <code>summary</code></td>
+              </tr>
+
+              <tr>
+                <td><code>contacts</code></td>
+
+                <td><code>array</code></td>
+
+                <td>Array of email addresses for people responsible
+                for this Client. The Authorization Server MAY make
+                these addresses available to end users for support
+                requests for the Client. An Authorization Server
+                MAY use these email addresses as identifiers for an
+                administrative page for this client.</td>
+              </tr>
+            </table>
+
+            <h3>Example Registration for a Public Client</h3>
+            <pre class="prettyprint">
+POST /register HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: bbplus-provider.org
+
+{
+  "client_name": "Blood Pressure Grapher",
+  "client_uri": "https://bpgrapher.org",
+  "logo_uri": "http://bpgrapher.org/images/logo.png",
+  "contacts": [
+    "plot-master@bpgrapher.org"
+  ],
+  "tos_uri": "https://bpgrapher.org/tos",
+  "redirect_uris": [
+    "https://bpgrapher.org/after-auth"
+  ],
+  "response_types": ["token"],
+  "grant_types": ["implicit"],
+  "token_endpoint_auth_method": "none",
+  "scope":  "summary"
+} 
+</pre>
+
+            <h3>Example Registration for a Confidential Client</h3>
+            <pre class="prettyprint">
+POST /register HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: bbplus-provider.org
+
+{
+  "client_name": "Blood Pressure Grapher",
+  "client_uri": "https://bpgrapher.org",
+  "logo_uri": "http://bpgrapher.org/images/logo.png",
+  "contacts": [
+    "plot-master@bpgrapher.org"
+  ],
+  "tos_uri": "https://bpgrapher.org/tos",
+  "redirect_uris": [
+    "https://bpgrapher.org/after-auth"
+  ],
+  "response_types": ["code"],
+  "grant_types": ["authorization_code"],
+  "token_endpoint_auth_method": "client_secret_basic",
+  "scope":  "summary"
+} 
+</pre>
+
+            <p>The client will receive a unique
+            <code>client_id</code> for that service provider, 
+            a <code>client_secret</code> that it can use to authorize at
+            the token endpoint, as well as a
+            <code>registration_access_token</code> that it can use
+            to maintain its registration at the registration endpoint, as described in
+            OAuth Dynamic Client Registration.</p>
+
+            <h2 id="registration-trusted">Trusted Registration</h2>
+
+            <p>In addition to open registration, BlueButton+
+            providers support a Trusted Registration option. When
+            performing a Trusted Registration, apps follow the
+            protocol described above, with the addition of a bearer
+            token from a BB+ Registry that the provder trusts. This
+            trusted bearer token is a <a href=
+            "http://tools.ietf.org/html/draft-ietf-oauth-json-web-token">
+            JSON Web Token</a> signed with <a href=
+            "http://tools.ietf.org/html/draft-jones-json-web-signature">
+            JSON Web Signature</a> and is verifiable by the service
+            provider.</p>
+
+            <div class="well alert-info">
+              <h4>Background: Client Classes and Client
+              Instances</h4>
+
+              <p>BB+ expects that most apps will connect to
+              <em>multiple BB+ providers</em>, and many apps will
+              run directly from <em>multiple end-user devices</em>.
+              This specification balances a desire for fine-grained
+              app registration (e.g. auditing each device's access
+              history independently) with a need for
+              coarser-grained permissions (e.g. disabling a rogue
+              app across all providers, or all devices). We achieve
+              this balance by enabling two points of control:
+              <em>Client Classes</em> and <em>Client
+              Instances</em>.</p>
+
+              <p>As an example to illustrate this distinction,
+              let's consider an iOS-based Blood Pressure Grapher.
+              This app is considered a "Client Class" because it's
+              associated with a single author, homepage, logo,
+              Terms of Service agreement, etc. As we'll describe
+              below, this class has instances for each BB+ Provider
+              the Blood Pressure Grapher registers with, and
+              possibly for each device it runs on.</p>
+
+              <p><strong>Client Instances per-Provider</strong> In
+              the OAuth sense, the BP Grapher app has a separate
+              "instance" for each (app, provider) pair it
+              participates in. For example, it will likely use a distinct
+              <code>client_id</code> to communicate with each BB+
+              provider. (Since <code>client_id</code> is assigned
+              by each provider as part of the normal OAuth Dynamic
+              Registration process, apps generally <em>will</em>
+              have have distinct identifiers for each provider.)
+              Still, since these instances all represent "the same
+              app", they belong to the same <strong>Client
+              Class</strong>.</p>
+
+              <p><strong>Client Instances per-Device</strong>
+              Similarly, if the Blood Pressure Grapher is installed
+              on multiple iOS devices, it will be assigned a
+              separate <code>client_id</code> for each
+              (app-on-device, provider) pair it participates in.
+              (Since <code>client_id</code> is assigned by each
+              provider as part of the normal OAuth Dynamic
+              Registration process, apps <em>MUST be assigned</em>
+              distinct identifiers per-device by each provider.)
+              Again, since these instances all represent "the same
+              app," they belong to the same <strong>Client
+              Class</strong>.</p>
+
+              <p><strong>Instance- and Class-level
+              Controls</strong> In this way, BB+ Providers MUST assign 
+              each instance of a Client Class a different
+              <code>client_id</code>, as stated in <a href="http://tools.ietf.org/html/draft-ietf-oauth-dyn-reg">OAuth 2 Dynamic Registration section 5.1</a>. Apps
+              MUST simply use the identifiers assigned. No matter which instance
+              identifiers are assigned, BB+ Providers maintain the
+              ability to make decisions at the Class level, so if
+              the Blood Pressure Grapher loses trust, all of its
+              instances can be disabled in one fell swoop.</p>
+            </div>
+
+            <h3>Process overview:</h3>
+<div class="wsd" wsd_style="napkin"><pre>
+Title: BlueButton+ Trusted Registration Process
+participant App
+participant Provider 
+participant "BB+ Registry"
+
+note over App,"BB+ Registry": Manual pre-registration
+App-->BB+ Registry: Register for membership
+BB+ Registry-->BB+ Registry: Verify app claims
+BB+ Registry-->BB+ Registry: Store app claims,\nmake available for discovery
+BB+ Registry-->App: Signed Registration JWT
+note over App: Time passes... time to register
+App->BB+ Registry: Lookup provider
+BB+ Registry->App: Provider information
+App->Provider: Registration Request + JWT
+Provider->Provider: Validate issuer
+Provider->BB+ Registry: Get Registry discovery information
+BB+ Registry->Provider: Registry discovery information
+Provider->BB+ Registry: Lookup signing key
+BB+ Registry->Provider: JWK Set
+Provider->Provider: Validate signature
+Provider->BB+ Registry: Lookup app claims
+BB+ Registry->Provider: Pre-registered app claims
+Provider->Provider: Verify reg matches claims
+Provider->App: client_id, secret, registration token
+</pre></div>
+
+            <ol>
+              <li>Client Class is manually pre-registered with a
+              BB+ Registry.
+
+                <ul>
+                  <li>BB+ Registry collects any fixed app
+                    <a href="#registration-parameters">registration
+                    parameters</a> including, at a minimum,
+                    <code>client_name</code> and
+                    <code>client_uri</code>
+                  </li>
+
+                  <li>BB+ Registry verifies these parameters
+                  (according to registry-specific policy)</li>
+
+                  <li>BB+ Registry makes these parameters
+                  discoverable via <a href="#discovery-apps">BB+
+                  App Discovery</a>
+                  </li>
+
+                  <li>BB+ Registry supplies the Client Class with a
+                  pre-registration token (signed JWT) for
+                  subsequent dynamic registration operations</li>
+                </ul>
+              </li>
+
+              <li>Client Instance presents the pre-registration
+              token (using an Authorization header or any valid
+              mechanism from RFC6750) to the registration endpoint
+              of the service provider (which is discoverable via
+              the <a href="#discovery-providers">BB+ Provider
+              Discovery</a>.
+              </li>
+
+              <li>Service provider validates the pre-registration
+              token by checking the signature against the public
+              key of the BB+ Registry indicated by the
+              <code>iss</code> field of the token (and/or doing
+              token introspection from the <code>iss</code>).</li>
+
+              <li>Service provider does application discovery based
+              on the <code>iss</code> and <code>sub</code> fields
+              of the token to find the apps.json entry for this
+              application</li>
+
+              <li>Service provider compares any dynamically registered client
+              metadata fields to any fixed value fields discovered in apps.json
+              </li>
+
+              <li>Client Instance receives a <code>client_id</code>
+              and <code>client_secret</code> as well as a
+              <code>registration_access_token</code></li>
+
+              <li>Client Instance requests user authorization and
+              tokens</li>
+
+              <li>Client Instance accesses protected services at
+              service provider</li>
+            </ol>
+            <p>
+
+            <h3>Pre-registration</h3>
+
+            <p>First, the Client class is manually pre-registered
+            with a BB+ Registry. This process may fix any of the
+            client parameters listed above, such as the
+            <code>client_name</code> and
+            <code>redirect_uris</code>. At a minimum,
+            <code>client_name</code> and <code>client_uri</code>
+            must be fixed at pre-registration time. All classes of
+            a client will share any fixed parameters.</p>
+
+            <p>The pre-registered client class will receive:</p>
+
+            <ul>
+              <li>a "subject" identifier unique within the scope of
+              the BB+ Registry. This "subject" identifer
+              <strong>should</strong> be the same as the app's
+              homepage (<code>client_uri</code>).</li>
+
+              <li>a signed registration token with the following
+              properties:</li>
+
+              <li style="list-style: none; display: inline">
+                <ul>
+                  <li><code>iss</code>: issuer is the URL of the
+                  BB+ Registry</li>
+
+                  <li><code>sub</code>: subject is an identifier
+                  from the BB+ Registry (as described above)</li>
+
+                  <li><code>iat</code>: timestamp of when this
+                  pre-registration information was last updated
+                  (and this token was issued)</li>
+
+                  <li><code>exp</code>: OPTIONAL timestamp of when
+                  this pre-registration token is no longer
+                  valid</li>
+                  
+                  <li><code>kid</code>: identifier for which key was 
+                  used to sign this token at the BB+ Registray</li>
+
+                  <li><em>these claims are combined in a JWT
+                  asymmetrically signed by the BB+ Registry.</em></li>
+                </ul>
+              </li>
+            </ul>
+
+            <h3>Registration</h3>
+
+            <p>The registration JWT from the previous step is
+            used by instances of the client during the initial call
+            to the registration endpoint for each service provider.            
+            The service provider now needs to validate the registration
+            JWT, compare the client's pre-registered attributes to
+            the ones requested dynamically, and proceed with the registration.</p>
+            
+            <p>For example, a client may send:</p>
+            <pre class="prettyprint">
+POST /register HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Authorization: ey...{JWT token omitted for brevity}...q48d
+Host: bbplus-provider.org
+
+{
+  "client_name": "Blood Pressure Grapher",
+  "contacts": [
+    "plot-master@bpgrapher.org"
+  ],
+  "tos_uri": "https://bpgrapher.org/tos",
+  "response_types": ["code"],
+  "grant_types": ["authorization_code"],
+  "token_endpoint_auth_method": "client_secret_basic",
+  "scope":  "summary"
+} 
+</pre>
+
+	    <h4>Validating the JWT</h4>            
+
+            <p>All service providers within a BB+ Registry must be
+            able to validate the signature and validity of any
+            registration tokens. First, the provdier must parse
+            the JWT and extract its <code>iss</code> (issuer) field
+            and determine if the issuer is trusted. This trust decision
+            will generally be a configuration option on the provider, which
+            will have a list of Registry Services that it trusts (identified
+            by their issuer URLs).</p>
+            
+            <p>If the <code>iss</code> is from a trusted source, the provider
+            then does <a href="#discovery-registry">discovery against the registry</a>
+            and finds the <code>jwks_uri</code> of the registry. The provider
+            downloads the key set from this URL (using an HTTPS GET request)
+            and extracts the key with the <code>kid</code> that is named in the
+            JWT. Using that key, the provider can then validate the signature
+            of the JWT as described in JSON Web Signatures.</p>
+            
+            <p class="alert alert-info">It's recommended that
+            BB+ Registries publish a <a href=
+            "http://tools.ietf.org/html/draft-richer-oauth-introspection">
+            token introspection endpoint</a> to facilitate token
+            validation by service providers. In addition to being able to check
+            the validity of the signature on a JWT, an introspection
+            endpoint can let a service provider determine if a JWT
+            is still valid (or has been revoked). 
+            </p>
+            
+            <h4>Validating the Registration</h4>
+
+            <p>The service provider does <a href="#discovery-apps">BB+
+            App Discovery</a> based on the <code>sub</code> (subject) and <code>iss</code> (issuer) in
+            the registration token to determine which client
+            metadata fields have been set ahead of time by the
+            pre-registration process. The provider
+            MUST abide by and enforce all pre-registered client values.
+            The Service provider will
+            compare these pre-registered fields with any
+            dynamically provided fields and determine the validity
+            of the registration. It is RECOMMENDED that providers 
+            perform a direct string comparison between pre-registered 
+            values and the values provided by the client. If there is a
+            mismatch in any field, the provider MUST either return 
+            an <code>invalid_client_metadata</code> error (as described
+            in OAuth 2 Dynamic Registration) or replace the dynamically
+            requested value with the pre-registered value. 
+            </p>
+
+            <h4>Completing the Registration</h4>
+            
+            <p>Once the provider has determined that the client registration
+            request is valid, it will generate and issue a unique <code>client_id</code>
+            and <code>registration_access_token</code>, and if applicable, a unique <code>client_secret</code>.
+            The provider MUST NOT re-use the same <code>client_id</code>, <code>registration_access_token</code>,
+            or <code>client_secret</code> for different client instances, even
+            if these instances are part of the same client class.</p>
+            
+            <p>The provider MAY link together different client instances that
+            are part of the same Client Class to facilitate logging, auditing,
+            and emergency deprovisioning of compromised applications. The
+            method for the provider doing this is out of scope of this 
+            specification.</p>
+            
+            <h3>Notes</h3>
+
+            <div class="well alert alert-info">
+              <strong>Notes:</strong>
+
+              <ul>
+                <li>The application owner/developer is responsible
+                for pre-registering with the BB+ Registry.</li>
+
+                <li>The service provider is responsible for
+                matching dynamic registration claims with the
+                pre-registered claims.</li>
+
+                <li>Client Instances present the token that comes
+                from the pre-registration process as part of a
+                normal dynamic registration with a particular
+                service provider.</li>
+
+                <li>This technique allows service providers to link
+                together multiple instances of a client based on
+                the tokens used during registration. Service
+                providers are responsible for linking thse client
+                instances together if they so desire. A service
+                provider MUST assign a unique <code>client_id</code>
+                for each registered instance and MUST NOT re-use 
+                the same <code>client_id</code> for 
+                other instances in the class.</li>
+
+                <li>Clients are responsible (in all registration
+                cases) for accepting and using the <code>client_id</code> issued
+                to them by each service provider when talking to
+                that service provider.</li>
+
+                <li>Even a web-server style client is going to need
+                to get different <code>client_id</code>'s from every service
+                provider, which means that even a single
+                installation of a client could have multiple
+                "instances" as far as the network is
+                concerned.</li>
+              </ul>
+            </div>
+        </section>
+
+        <section id="discovery">
+          <div class="page-header">
+            <h1>Provider and App Discovery <small>via BB+ Registries</small>
+            <span class=
+            "label label-success">Common</span></h1></div>
+
+            <p>BlueButton+ Pull uses <strong>BB+ Registry
+            Servers</strong> to enable discovery of BB+ Providers
+            and BB+ Apps. Each BB+ Registry Server exposes a set of
+            trusted providers and a set of trusted apps at
+            well-known <code>https</code> URLs, using simple
+            <a href="http://json-ld.org/">JSON-LD</a> arrays. In
+            the BB+ ecosystem, apps and providers must be
+            pre-configured with a BB+ Registry Server (or Servers).
+            All discovery endpoints are organized beneath
+            <code>.well-known/bb/</code> at the server's root.</p>
+
+            <h5>Why JSON-LD?</h5>
+
+            <div class="well alert-info">
+              <p><strong>JSON-LD</strong> provides a nice balance
+              between idiomatic JSON and well-structured data
+              representations. By combining a JSON payload with a
+              JSON-LD context, properties can be expanded to full
+              URIs so that data can be mixed and matched with other
+              services. For example, the BB+ Provider element below
+              can automatically be:</p>
+
+              <ul>
+                <li>
+                  <a href="http://tinyurl.com/bpz5xsx" target=
+                  "_blank">Expanded to full property URIs</a>
+                </li>
+
+                <li>
+                  <a href="http://tinyurl.com/cp9vmum" target=
+                  "_blank">Normalized in RDF</a>
+                </li>
+              </ul>
+            </div>
+
+            <h2 id="discovery-registry">BB+ Registry 
+            Discovery</h2>
+
+            <p>A BB+ Registry Server exposes a BB+ Registry
+            discovery endpoint at:
+            <code>/.well-known/bb/registry.json</code></p>
+
+            <h3>registry.json</h3>
+
+            <p><code>registry.json</code> is a single
+            Registry element expressed as JSON-LD with a default
+            <code>@vocab</code> from <a href=
+            "http://schema.org">http://schema.org</a> and
+            additional properties defined in the <a href=
+            "context-json-ld.js">BB+ JSON-LD Context</a></p>
+
+            <p>While any vocabulary from schema.org may be used in
+            describing a BB+ Registry, the <strong>following fields
+            are required:</strong></p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Property</th>
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>name</code></td>
+                <td>Human-readable Name of the BB+ Registry</td>
+              </tr>
+
+              <tr>
+                <td><code>url</code></td>
+                <td>Root URL of the BB+ Registry (to which <code>.well-known/bb/registry.json</code> can be appended)</td>
+              </tr>
+
+              <tr>
+                <td><code>jwks_uri</code></td>
+                <td>URL of the JSON Web Key (JWK) set for this BB+ Registry. This URL MUST be protected by HTTPS or equivalent.</td>
+              </tr>
+
+              <tr>
+                <td><code>trust_bundle_uri</code></td>
+
+                <td>URL of the BB+ Push Trust Bundle (<code>.p7b</code>, <code>.p7c</code>, or <code>.p7m</code> file).
+                    Only used for BB+ Registries that also act as BB+ Push Trust Bundles.
+                </td>
+              </tr>
+
+              <tr>
+                <td><code>oauth2</code></td>
+
+                <td>Collection of OAuth2 endpoints</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty">
+                <code>introspect</code></td>
+
+                <td>
+                  RECOMMENDED OAuth2 introspection endpoint (As
+                  described in <a href=
+                  "http://tools.ietf.org/html/draft-richer-oauth-introspection">
+                  this draft</a>)
+                </td>
+              </tr>
+            </table>
+
+            <h5>registry.json example</h5>
+            <pre class="prettyprint">
+Content-Type: application/json
+Link: &lt;http://jmandel.github.com/blue-button-plus-pull/context-json-ld.js&gt;; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+
+{
+  "name": "The BB+ Registry Foundation",
+  "url": "http://registry.org/",
+  "jwks_uri": "https://registry.org/public_key.jwks",
+  "oauth2": {
+    "introspect": "https://registry.org/oauth/introspect",
+  }
+
+}
+            
+</pre>
+
+            <h2 id="discovery-providers">Registered Providers</h2>
+
+            <p>A BB+ <strong>Provider</strong> is defined as the unique combination of a data service provider (a service that serves the BB+ data API) and an authorization provider (an OAuth2 authorization server and related components). Therefore, if a given data provider allows for two different authorization services, there will be two different BB+ Providers listed at the Registry Server. Likewise, if an authorization server is used for two different data providers, it will be listed separately in two different BB+ Providers at the Registry.</p>
+            
+            <p>A BB+ Registry Server exposes a BB+ Provider
+            Discovery endpoint at:
+            <code>/.well-known/bb/providers.json</code></p>
+
+            <h3>providers.json</h3>
+
+            <p><code>providers.json</code> is a JSON array of
+            Provider elements, expressed as JSON-LD with a default
+            <code>@vocab</code> from <a href=
+            "http://schema.org">http://schema.org</a> and
+            additional properties defined in the <a href=
+            "context-json-ld.js">BB+ JSON-LD Context</a></p>
+
+            <p>While any vocabulary from schema.org may be used in
+            describing a provider, the <strong>following fields are
+            required:</strong></p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Property</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>name</code></td>
+                <td>Name of the BB+ Provider organization</td>
+              </tr>
+              <tr>
+                <td><code>url</code></td>
+
+                <td>Primary url of the provider organization</td>
+              </tr>
+
+
+            </table>
+
+            <p> Each provider also exposes its endpoint URIs via the following properties:</p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Property</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>patient_signin</code></td>
+
+                <td>URL where a patient can sign in to the
+                Provider</td>
+              </tr>
+
+              <tr>
+                <td><code>oauth2</code></td>
+
+                <td>Collection of OAuth2 endpoints</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty"><code>registration_uri</code></td>
+
+                <td>OAuth2 dynamic registration endpoint</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty"><code>authorize_uri</code></td>
+
+                <td>OAuth2 authorization endpoint</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty"><code>token_uri</code></td>
+
+                <td>OAuth2 token endpoint</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty">
+                <code>introspect_uri</code></td>
+
+                <td>
+                  OAuth2 introspection endpoint (As described in
+                  <a href=
+                  "http://tools.ietf.org/html/draft-richer-oauth-introspection">
+                  this draft</a>)
+                </td>
+              </tr>
+
+              <tr>
+                <td><code>bb_api</code></td>
+
+                <td>Collection of BB+ API endpoints</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty"><code>summary</code></td>
+
+                <td>BlueButton+ Clinical Summary endpoint</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty"><code>search</code></td>
+
+                <td>BlueButton+ Document Search endpoint</td>
+              </tr>
+            </table>
+
+
+            <h5>providers.json example</h5>
+            <pre class="prettyprint">
+Content-Type: application/json
+Link: &lt;http://blue-button.github.com/blue-button-plus-pull/context-json-ld.js&gt;; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+
+[
+{
+  "name": "Good Health Clinic",
+  "description": "Serving your health needs since 1999",
+  "url": "http://goodhealthclinic.org",
+  "patient_signin": "http://portal.goodhealthclinic.org",
+  "location": {
+    "geo": {                       
+      "latitude": 42.3591,            # just making the point that we can
+      "longitude": -71.0934           # use arbitrary schema.org properties
+    }
+  },
+  "oauth2": {
+    "registration_uri": "http://portal.goodhealthclinic.org/register",
+    "authorize_uri": "http://portal.goodhealthclinic.org/authorize",
+    "token_uri": "http://portal.goodhealthclinic.org/token"
+  },
+  "bb_api":{
+    "summary": "http://api.goodhealthclinic.org/patient/documents/summary",
+    "search": "http://api.goodhealthclinic.org/patient/documents/search"
+  }
+},
+{
+ ... (more providers here) ...
+}
+] 
+</pre>
+
+
+
+          
+          <h2 id="discovery-apps">Registered Apps</h2>
+
+            <p>A BB+ Registry Server exposes a <strong>BB+ App
+            Discovery</strong> endpoint at:
+            <code>/.well-known/bb/apps.json</code></p>
+
+            <h3>apps.json</h3>
+
+            <p><code>apps.json</code> is a JSON array of App
+            elements, expressed as JSON-LD with a default
+            <code>@vocab</code> from <a href=
+            "http://schema.org">http://schema.org</a> and
+            additional properties defined in the <a href=
+            "context-json-ld.js">BB+ JSON-LD Context</a></p>
+
+            <p>While any vocabulary from schema.org may be used in
+            describing a provider, the <strong>following fields are
+            required:</strong></p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Property</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>name</code></td>
+
+                <td>Name of the BB+ App</td>
+              </tr>
+
+              <tr>
+                <td><code>url</code></td>
+
+                <td>Primary url of the BB+ App</td>
+              </tr>
+
+              <tr>
+                <td><code>fixed_registration_parameters</code></td>
+
+                <td>
+                  JSON structure containing any <a href=
+                  "#registration-parameters">registration
+                  parameters</a> that are fixed across all
+                  instances of this app. A Trusted Registration
+                  request must match on all parameters
+                  defined in the <code>fixed_registration_parameters</code>
+                  structure. (Note:  matching requires
+                  that <code>JSON.stringify</code> return identical 
+                  values for a given fixed registration parameter.
+                  Failure to match on any parameter results in a rejected
+                  Trusted Registration request.) This structure may include
+                  any valid client metadata reistration parameters,
+                  and the following properties MUST be
+                  locked down.
+                </td>
+              </tr>
+
+              <tr>
+                <td class="subproperty">
+                <code>client_name</code></td>
+
+                <td>client_name must be fixed across all app
+                instances and must match the schema.org name
+                above</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty">
+                <code>client_uri</code></td>
+
+                <td>client_uri must be fixed across all app
+                instances and must match the schema.org url
+                above</td>
+              </tr>
+
+              <tr>
+                <td class="subproperty">
+                <code>redirect_uris</code></td>
+
+                <td>the set of allowable redirect_uris must be
+                fixed across all app instances</td>
+              </tr>
+            </table>
+
+            <h5>apps.json example</h5>
+            <pre class="prettyprint">
+Content-Type: application/json
+Link: &lt;http://blue-button.github.com/blue-button-plus-pull/context-json-ld.js&gt;; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+
+[
+{
+  "url": "https://bpgrapher.org",
+  "name": "Blood Pressure Grapher",
+  "fixed_registration_parameters": {
+      "client_name": "Blood Pressure Grapher",
+      "client_uri": "https://bpgrapher.org",
+      "logo_uri": "http://bpgrapher.org/images/logo.png",
+      "contacts": [
+        "plot-master@bpgrapher.org"
+      ],
+      "tos_uri": "https://bpgrapher.org/tos",
+      "redirect_uris": [
+        "https://bpgrapher.org/after-auth"
+      ],
+      "response_types": ["token"],
+      "grant_types": ["implicit"],
+      "token_endpoint_auth_method": "none",
+      "scope":  "summary"
+  },
+},
+{
+ ... (more apps here) ...
+}
+] 
+</pre>
+        </section>
+
+	<section id="scopes">
+	  <div class="page-header">
+	    <h1>Standard Scopes <small>structured values for conveying authorization information</small> <span class="label label-success">Common</span></h1></div>
+	   
+	   <p>In APIs protected by OAuth 2, the <code>scope</code> mechanism allows the Authorization Server, Client, and Protected Resource to communicate the level of access that the client has been authorized for. These scopes are expressed at different times throughout the process:</p>
+	   
+	   <ol>
+	    <li>At pre-registration with a Registry, an application class may pre-register the set of scopes that its instances will be able to ask for in future steps</li>
+	    <li>At registration, a client instance may ask for a set of scopes to be tied to its registration</li>
+	    <li>At registration, an authorization server will register a client instance with a set of scopes that the client instance may ask for at the authorization endpoint</li>
+	    <li>At authorization, a client may ask for a set of scopes to be tied to the issued token</li>
+	    <li>At authorization, an end-user and authorization server will determine which scopes are associated with the issued token</li>
+	    <li>At token issuance, a token is associated with a set of authorized scopes expressed in the return from the token endpoint</li>
+	    <li>At access time, the protected resource compares the scopes associated with the token to the scopes required to access the data API in question</li>
+	   </ol>
+	   
+     <p>The <code>scope</code> paramter in OAuth 2 is a space-separated list of strings, and the values, syntax, and sematnics of the individual scopes are service specific. In the context of Blue Button+, scopes that are defined by the BB+ Push and Pull protocols. </p>
+	   
+	   <h2>Structured Scopes</h2>
+	   
+	   <p>In BB+, structured scopes have two parts: a root scope value and a (potentially empty) parameter value, separated by the colon ":" character. In general, the root scope value is used in the pre-registration and registration steps above (steps 1-3), and the fully-specified scope value (root:parameter) is used in the authorization, token, and access steps above (4-7).  Registration for the root scope value implies permission for the client instance to ask for authorization for any fully parameterized scope based on that root. (Note that as with all OAuth 2 scopes, the permission to ask for authorization in no way guarantees or implies that authorization will be granted.)</p>
+	   
+	   <table class="table table-striped table-hover">
+	    <thead>
+	      <tr>
+		<th>Root Value</th>
+		<th>Parameter</th>
+		<th>Description</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+		<td><code>search</code></td>
+		<td rowspan="2"><code>patient record pseudo-id</code></td>
+    <td rowspan="2">
+    
+    <p>In the Pull authorization protocol, <code>search:</code> represents access to the BB+ Search endpoint, and <code>summary:</code> represents access to the BB+ Summary endpoint. The scope is parameterized because in some cases the authorizing user may not be the same as the patient (for example, a parent authorizing access to her child's record).  This parameter allows each party to keep track of how access tokens map to individual patients, rather than invidiual authorizing users. An empty parameter value (<code>search:</code> or <code>summary:</code>) represents the common case where a patient is authorizing access to her own record. Non-empty parameter values such as <code>search:123</code> or <code>summary:jane</code> are used when the authorizing user is not the same person as the patient whose record is being accessed.
+    </p>
+
+    <p> An authorization server need not understand the value of the parameter in order to let the user grant access, but the resource server MUST understand and enforce the value. At this time, each BB+ Pull authorization MUST be associated with <em>exactly one</em> patient record identifier. In other words, <em>a given access token may only be used to access one patient's data</em>.  In step 5, the authorization server MAY prompt the user to choose a single patient record: for example, by asking the end-user to enter a code directly or choose from a list. The details of how these parameter values are defined and communicated between the protected resource, client, end-user, and authorization server are out of scope for this proposal and often out of band. (For example a pediatrician's office may provide a parent with a print-out including a short code to type in at authorization time for authorizing access to each child's record.) 
+    </p>
+    </td>
+
+	      </tr>
+        <tr>
+		<td><code>summary</code></td>
+    </tr>
+  	      <tr>
+		<td><code>send-email-to</code></td>
+		<td><code>DIRECT email address</code></td>
+		<td>In the Push authorization protocol, this scope represents end-user authorization for the provider to send email to the DIRECT email address stated in the parameter value, such as <code>send-email-to:oip8erjoiaewjoi@direct.bp-grapher.org</code>. When used without a parameter in step 4, the authorization server MUST prompt the end user for the DIRECT email address to use. In steps 5-7, the semantics of this scope without the parameter value are undefined and out of scope for this protocol.</td>
+	    </tbody>
+	  </table>
+	
+	</section>
+        
+        <section id="authorization">
+          <div class="page-header">
+            <h1>App Authorization <small>a runtime, patient-driven
+            step</small> <span class=
+            "label label-info">Pull</span></h1></div>
+
+            <p>BlueButton+ providers allow apps to obtain patient
+            authorization to health data using standard OAuth2
+            authorization flows. There are two authorization flows
+            initially supported: Implcit Grant (appropriate only
+            for public clients) and Authorization Code Grant
+            (appropriate for public as well as confidential
+            clients).</p>
+
+            <p>Both flows follow the same basic pattern:</p>
+
+            <ol>
+              <li>App redirects the browser to a BlueButton+
+              Provider's Authorization endpoint</li>
+
+              <li>BB+ Provider authenticates patient and obtains
+              authorization</li>
+
+              <li>BB+ Provider redirects control back to App</li>
+            </ol>
+
+            <h2 id="authorization-code">Authorization Code Grant
+            <small>for public or confidential clients</small></h2>
+
+            <h3>1. App-to-Provider Redirection</h3>To initiate an
+            Authorization Code Grant authorization, the app
+            redirects the browser to a BlueButton+ provider's
+            Authorization endpoint with the following URL
+            parmeters:
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>response_type</code></td>
+
+                <td>REQUIRED. Value MUST be set to
+                <code>code</code>.</td>
+              </tr>
+
+              <tr>
+                <td><code>client_id</code></td>
+
+                <td>REQUIRED. The client identifier</td>
+              </tr>
+
+              <tr>
+                <td><code>redirect_uri</code></td>
+
+                <td>REQUIRED. Must match one of the client's
+                pre-registered redirect URIs.</td>
+              </tr>
+
+              <tr>
+                <td><code>scope</code></td>
+
+                <td>REQUIRED. Must include
+                one or both of:
+                <code>search</code>
+                and
+                <code>summary</code></td>
+              </tr>
+
+              <tr>
+                <td><code>state</code></td>
+
+                <td>RECOMMENDED. An opaque value used by the client
+                to maintain state between the request and callback.
+                The authorization server includes this value when
+                redirecting the user-agent back to the client. The
+                parameter SHOULD be used for preventing cross-site
+                request forgery <span class=
+                "label label-warning">Should state be REQUIRED with
+                a minimum level of entropy?</span></td>
+              </tr>
+            </table>
+
+            <h5>Example App-to-Provider Redirection (newlines added
+            for clarity)</h5>
+            <pre class="prettyprint">
+/authorize?
+response_type=code&amp;
+client_id=bp-grapher&amp;
+redirect_uri=https%3A%2F%2Fbpgrapher.org%2Fafter-auth&amp;
+scope=search%3A+search%3A&amp;
+state=98wrghuwuogerg97
+
+Host: bbplus-provider.org
+</pre>
+
+            <h3>2. Provider Authenticates Patient and Obtains
+            Authorization</h3>The mechanism by which providers
+            authenticate patients and obtain authorization is out
+            of scope for this specification
+
+            <h3>3. Provider-to-App Redirection</h3>
+
+            <p>After a successful authorization step, the
+            BlueButton+ provider redirects the browser to the app's
+            <code>redirect_uri</code>, with the following
+            parameters <strong>supplied in the query
+            component</strong>.</p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>code</code></td>
+
+                <td>REQUIRED. The authorization code generated by
+                the authorization server. The authorization code
+                MUST expire shortly after it is issued to mitigate
+                the risk of leaks.</td>
+              </tr>
+
+              <tr>
+                <td><code>state</code></td>
+
+                <td>REQUIRED. The exact value received from the
+                client.</td>
+              </tr>
+            </table>
+
+            <h5>Example Provider-to-App Redirection (newlines added
+            for clarity)</h5>
+            <pre class="prettyprint">
+/after-oauth?
+code=j0j9midoe0r9gjwro83h974t8gifb&amp;
+state=98wrghuwuogerg97
+
+Host: bpgrapher.org
+</pre>
+
+            <h3>4. App exchanges authorization code for access
+            token</h3>
+
+            <p>After receiving an authorization code, the app
+            issues a request to the BlueButton+ provider's
+            <code>Token URI</code> to exchange the authorization
+            code for an access token. The exchange includes the
+            following parameters</p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>grant_type</code></td>
+
+                <td>REQUIRED. Fixed value:
+                <code>authorization_code</code></td>
+              </tr>
+
+              <tr>
+                <td><code>code</code></td>
+
+                <td>REQUIRED. Code that an app can exchange for an
+                access token.</td>
+              </tr>
+
+              <tr>
+                <td><code>redirect_uri</code></td>
+
+                <td>REQUIRED. The same redirect_uri used in the
+                initial authorization request</td>
+              </tr>
+
+              <tr>
+                <td><code>client_id</code></td>
+
+                <td>REQUIRED for public clients. May be omitted by
+                confidential clients where the client_id is communicated
+                via the client's authentication to the token endpoint.</td>
+              </tr>
+            </table>
+
+            <h5>Example Code-for-Token Exchange Request (Public
+            Client)</h5>
+            <pre class="prettyprint">
+POST /token HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;
+code=j0j9midoe0r9gjwro83h974t8gifb&amp;
+redirect_uri=https%3A%2F%2Fbpgrapher.org%2Fafter-auth&amp;
+client_id=bp-grapher 
+</pre>
+
+            <h5>Example Code-for-Token Exchange Request
+            (Confidential Client)</h5>
+            <pre class="prettyprint">
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic {{TODO: client password auth example}}
+Content-Type: application/x-www-form-urlencoded/token?
+
+grant_type=authorization_code&amp;
+code=j0j9midoe0r9gjwro83h974t8gifb&amp;
+redirect_uri=https%3A%2F%2Fbpgrapher.org%2Fafter-auth 
+</pre>
+
+            <p>The response is a JSON object containing the
+            following parameters</p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>access_token</code></td>
+
+                <td>REQUIRED. The access token issued by the
+                authorization server</td>
+              </tr>
+
+              <tr>
+                <td><code>token_type</code></td>
+
+                <td>REQUIRED. Fixed value: <code>bearer</code></td>
+              </tr>
+
+              <tr>
+                <td><code>expires_in</code></td>
+
+                <td>REQUIRED. The lifetime in seconds of the access
+                token. For example, the value "3600" denotes that
+                the access token will expire in one hour from the
+                time the response was generated.</td>
+              </tr>
+
+              <tr>
+                <td><code>scope</code></td>
+
+                <td>REQUIRED. Scope of access authorized by the
+                patient.</td>
+              </tr>
+            </table>
+
+            <h5>Example Code-for-Token Exchange Response</h5>
+            <pre class="prettyprint">
+{
+  "access_token": "i8hweunweunweofiwweoijewiwe",
+  "token_type": "bearer",
+  "expires_in": "3600",
+  "scope": "summary:"
+} 
+</pre>
+
+            <h2 id="authorization-implicit">Implicit Grant
+            <small>for public clients</small></h2>
+
+            <h3>1. App-to-Provider Redirection</h3>To initiate an
+            Implicit Grant authorization, the app redirects the
+            browser to a BlueButton+ provider's Authorization
+            endpoint with the following URL parmeters:
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>response_type</code></td>
+
+                <td>REQUIRED. Value MUST be set to
+                <code>token</code>.</td>
+              </tr>
+
+              <tr>
+                <td><code>client_id</code></td>
+
+                <td>REQUIRED. The client identifier</td>
+              </tr>
+
+              <tr>
+                <td><code>redirect_uri</code></td>
+
+                <td>REQUIRED. Must match one of the client's
+                pre-registered redirect URIs.</td>
+              </tr>
+
+              <tr>
+                <td><code>scope</code></td>
+
+                <td>REQUIRED. Must include
+                one or both of:
+                <code>search</code>
+                and
+                <code>summary</code></td>
+              </tr>
+
+              <tr>
+                <td><code>state</code></td>
+
+                <td>RECOMMENDED. An opaque value used by the client
+                to maintain state between the request and callback.
+                The authorization server includes this value when
+                redirecting the user-agent back to the client. The
+                parameter SHOULD be used for preventing cross-site
+                request forgery <span class=
+                "label label-warning">Should state be REQUIRED with
+                a minimum level of entropy?</span></td>
+              </tr>
+            </table>
+
+            <h5>Example App-to-Provider Redirection (newlines added
+            for clarity)</h5>
+            <pre class="prettyprint">
+/authorize?
+response_type=token&amp;
+client_id=bp-grapher&amp;
+redirect_uri=https%3A%2F%2Fbpgrapher.org%2Fafter-auth&amp;
+scope=search%3A+summary%3A&amp;
+state=98wrghuwuogerg97
+
+Host: bbplus-provider.org 
+</pre>
+
+            <h3>2. Provider Authenticates Patient and Obtains
+            Authorization</h3>The mechanism by which providers
+            authenticate patients and obtain authorization is out
+            of scope for this specification
+
+            <h3>3. Provider-to-App Redirection</h3>
+
+            <p>After a successful authorization step, the
+            BlueButton+ provider redirects the browser to the app's
+            <code>redirect_uri</code>, with the following
+            parameters <strong>embedded in the URI's #fragment
+            component</strong>.</p>
+
+            <table class="table table-striped">
+              <tr>
+                <th>Parameter</th>
+
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>access_token</code></td>
+
+                <td>REQUIRED. The access token issued by the
+                authorization server</td>
+              </tr>
+
+              <tr>
+                <td><code>token_type</code></td>
+
+                <td>REQUIRED. Fixed value: <code>bearer</code></td>
+              </tr>
+
+              <tr>
+                <td><code>expires_in</code></td>
+
+                <td>REQUIRED. The lifetime in seconds of the access
+                token. For example, the value "3600" denotes that
+                the access token will expire in one hour from the
+                time the response was generated.</td>
+              </tr>
+
+              <tr>
+                <td><code>scope</code></td>
+
+                <td>REQUIRED. Scope of access authorized by the
+                patient.</td>
+              </tr>
+
+              <tr>
+                <td><code>state</code></td>
+
+                <td>REQUIRED. The exact value received from the
+                client.</td>
+              </tr>
+            </table>
+
+            <h5>Example Provider-to-App Redirection (newlines added
+            for clarity)</h5>
+            <pre class="prettyprint">
+/after-auth#
+access_token=i8hweunweunweofiwweoijewiwe&amp;
+token_type=bearer&amp;
+expires_in=3600&amp;
+scope=search%3A+summary%3A&amp;
+state=98wrghuwuogerg97
+
+Host: bbplus-provider.org 
+</pre>
+        </section>
+
+        <section id="clinical-api">
+          <div class="page-header">
+
+            <h1>Clinical API<small>summary & search</small> <span class=
+            "label label-info">Pull</span></h1></div>
+
+            <h2>Using the BB+ Clinical API</h2>
+            To access BlueButton+ Clinical API endpoints, an app:
+            <ol>
+            <li>Obtains Patient Authorization via <a href="#authorization">BB+ Authorization</a></li>
+            <li>Discovers a provider's clinical API endpoints via <a href="#discovery-single-provider">Single-Provider Discovery</a> </li>
+            <li>Issues an authenticatd request to the endpoint, supplying its OAuth bearer token</li>
+            </ol>
+
+            <h3>Discovering endpoint URIs</h3>
+
+            Each BB+ Provider exposes a clinical summary endpoint and a
+            document search endpoint.  An app discovers the URLs for these
+            endpoints at runtime by performing <a
+            href="#discovery-single-provider">Single-Provider Discovery</a>.
+            The discovery process results in a JSON-LD object whose <code>bb_api.*</code>
+            properties are used for the operations described below.
+
+            <h3>Issuing API calls</h3>
+
+            To issue an authenticated API call, an app requests the BB+
+            Clinical API endpoint using the appropriate HTTP method (generally
+            <code>GET</code> for read-only operations), including its OAuth
+            bearer token using an <code>Authorization</code> header or any valid
+            mechanism from RFC6750.
+
+            <h3>Negotiating <code>Content-type</code> of the response</h3>
+
+           An app may include an <code>Accept</code> HTTP header with the
+           request.  Apps that are unable to set an <code>Accept</code> header
+           may alternatively supply a <code>_format</code> query parameter.
+           Valid <code>content-type</code> values are listed for each endpoint below.
+
+            <h2 id="clinical-summary">Clinical Summary</h2>
+
+            <h5>Endpoint URI: <code>bb_api</code>.<code>summary</code></h5>
+
+            The clinical summary endpoint returns the most recently available
+            summary document.  By default, BB+ Providers supply a clinical
+            summary document in Consolidated CDA XML format.  For convenience,
+            other MIME types may be derived from a Consolidated CDA and
+            returned to an app.  Providers SHOULD support the following
+            formats, all of which can be automatically derived from a C-CDA:
+
+            <table class="table table-striped">
+
+              <tr>
+                <th>Accept header</th>
+                <th>description</th>
+              </tr>
+
+              <tr>
+                <td><code>text/xml</code></td>
+                <td>DEFAULT.  A Consolidated CDA in XML.</td>
+              </tr>
+
+              <tr>
+                <td><code>text/plain</code></td>
+                <td>A document rendered as a simple text file (as in the VA's "classic" BlueButton implementation.</td>
+              </tr>
+
+              <tr>
+                <td><code>text/html</code></td>
+                <td>A document rendered as HTML (as might be obtained by applying a generic stylesheet to a C-CDA).</td>
+              </tr>
+
+            </table>
+
+            <h3>Using the summary endpoint</h3>
+
+            <p>To retrieve the most recent clinical summary document, an app
+            issues an http <code>GET</code> to the <code>summary</code>
+            endpoint, including its bearer token using an Authorization
+            header or any valid mechanism from RFC6750.
+            </p>
+
+        
+            <h4>Example</h4>
+    
+            <pre>
+GET /bb/record/summary HTTP/1.1
+Accept: application/xml
+Authorization: i8hweunweunweofiwweoijewiwe
+Host: bbplus-provider.org
+</pre>
+
+            <h2 id="clinical-search">Document Search</h2>
+
+            <h5>Endpoint URI: <code>bb_api</code>.<code>search</code></h5>
+      
+            <p>The clinical document search endpoint allows an app to search for
+            clinical documents that match a set of search parameters. A core
+            set of features are described here. </p>
+            
+            <p>
+            The following five fields of a <code>DocumentReference</code> must be defined to support
+            BB+ Document Search:</p>
+
+            <ul>
+              <li> <code>url</code> to support <a href="#clinical-document-retrieval">Document Retrieval</a></li>
+              <li> <code>conformsTo</code> to distinguish CCDA vs. CCD 1.0 vs. CCR (see below)</li>
+              <li> <code>format</code> to describe MIME type </li>
+              <li> <code>type</code> to describe clinical content</li>
+              <li> <code>context.period</code> to describe period of care</li>
+            </ul>
+            
+            <p>For full details, see <a
+            href="http://www.hl7.org/implement/standards/fhir/documentreference.htm">FHIR's
+            DocumentReference definition</a>.  
+            </p>
+
+            <h3>Search returns a feed of DocumentReferences</h3>
+            
+            It's important to keep in mind that the document search endpoint
+            does not return document content directly.  Rather, it returns an
+            Atom feed (or JSON equivalent) containing document descriptors in
+            the form of FHIR's DocumentReference resources.  These resources included
+            basic document metadata as well as a URL that can be used to fetch
+            a document's contents (see <a href="#api-document-fetch">Document
+            Retrieval</a> below.)
+
+
+            <h5>Search Parameters</h5>
+            <table class="table table-striped">
+
+              <tr>
+                <th>Query parameter</th>
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><code>format</code></td>
+
+                <td>
+                
+                <p>Filter the available documents by a MIME type. Most clinical documents today have MIME type <code>text/xml</code>.</p>
+                
+                Multiple <code>format</code> parameters are processed as an "or" (union).
+
+                </td>
+
+              </tr>
+
+
+              <tr>
+                <td><code>conformsTo</code></td>
+
+                <td>
+                Filter by information model (e.g. CCD 1.0, C-CDA, CCR).  
+
+                 <dl class="dl-horizontal">
+                  <dt>CCR</dt>
+                  <dd>Content expressed using the <a href="http://www.astm.org/Standards/E2369.htm">ASTM CCR</a> Standard</dd>
+
+                  <dt>CCD</dt>
+                  <dd>Content expressed using the <a href="http://www.hl7.org/implement/standards/product_brief.cfm?product_id=6">HL7 CCD 1.0</a> Standard</dd>
+
+                  <dt>CCDA</dt>
+                  <dd>Content expressed using the <a href="http://www.hl7.org/implement/standards/product_brief.cfm?product_id=258">HL7 CCDA</a> Standard (including CCD 1.1)</dd>
+                </dl>
+                
+                Multiple <code>conformsTo</code> parameters are processed as an "or" (union).
+
+                </td>
+
+              </tr>
+              <tr>
+                <td><code>type</code></td>
+
+                <td>
+                
+                Filter the available documents by document type.  The following values are supported:
+                 <dl class="dl-horizontal">
+                  <dt>Summary</dt><dd>Continuity of Care Document</dd>
+                  <dt>Consult</dt><dd>Consultation Note</dd>
+                  <dt>Imaging</dt><dd>Diagnostic Imaging Report</dd>
+                  <dt>Discharge</dt><dd>Discharge summary</dd>
+                  <dt>HandP</dt><dd>History and Physical Note</dd>
+                  <dt>Operative</dt><dd>Operative Note</dd>
+                  <dt>Procedure</dt><dd>Procedure Note</dd>
+                  <dt>Progress</dt><dd>Progress Note</dd>
+                  <dt>Lab</dt><dd>Lab report</dd>
+                  <dt>Unstructured</dt><dd>Unstructured document</dd>
+               </dl>
+                Multiple <code>type</code> parameters are processed as an "or" (union).
+
+               </td>
+
+              </tr>
+
+              <tr>
+                <td><code>period-before</code></td>
+
+                <td>
+                <p>Filter for documents describing a period before a given time. If no time zone is specified, the server
+                may assume local time, local time of the querying system, or
+                some other fixed time zone.</p>
+
+                <p><strong>Example</strong>: <code>2012-01-01T06:00-05:00</code> (6:00am on January 1, 2012 GMT-5)</p>
+
+                </td>
+              </tr>
+
+              <tr>
+                <td><code>period-after</code></td>
+
+                <td>
+                <p>Filter for documents describiing a period after a given time. </p>
+                </td>
+              </tr>
+
+          </table>
+
+          In addition to the search paramters described above, BB+ providers
+          support Content-type negotiation to determine the format in which
+          results are returned. The following formats are available:
+
+            <table class="table table-striped">
+              <tr>
+                <th>Accept header</th>
+                <th>description</th>
+              </tr>
+
+              <tr>
+                <td><code>application/atom+xml</code></td>
+                <td>DEFAULT. An Atom feed representation of <code>DocumentReference</code> elements.
+              </tr>
+
+              <tr>
+                <td><code>application/json</code></td>
+                <td>A JSON bundle of <code>DocumentReference</code> elements (like Atom, but in FHIR-defined JSON)</td>
+              </tr>
+
+            </table>
+
+ 
+          <div class="well alert-info">
+            <h4>Content-type (_format) vs. format</h4>
+
+            Two distinct "format-related" parameters are used at the clinical document search endpoint, and it's important to keep them straight.
+
+            <dl>
+            <dt>Accept header (or _format parameter)</dt>
+            <dd>Defines the MIME type in which search results are returned.  Remember that search results are returned as a feed of DocumentReference document descriptions, and actual document content is not embedded in this feed. So this parameter simply determines whether the feed is Atom (default) or JSON.</dd>
+            <dt>format parameter</dt>
+            <dd>Search parameter to filter documents by format (typically <code>text/xml</code>). Note the lack of undescore.</dd>
+            </dl>
+          </div>
+
+          <h3>Using the search endpoint</h3>
+
+            <p>To search for relevant documents, an app
+            issues an http <code>GET</code> to the <code>search</code>
+            endpoint, including its bearer token using an Authorization
+            header or any valid mechanism from RFC6750.
+            </p>
+
+        
+          <h4>Example request</h4>
+
+          <p>The following query obtains a JSON feed of C-CDA Operative notes and
+          Procedure notes pertaining to episodes of care that ended prior to
+          2013.</p>
+          
+          <p>Newlines and indentation added around URL parameters for
+          clarity</p>
+
+          <pre>
+GET /bb/record/search?                      # provider-supplied endpoint
+   format=text%2Fxml&amp;                             # limit to XML files
+   conformsTo=CCDA&amp;                               # limit to Consolidated CDAs
+   type=Operative&amp;                              # limit to Operative notes *or*
+   type=Procedure&amp;                              #          Procedure notes
+   period.before=2013-01-01T00:00Z              # limit to care episodes that
+   HTTP/1.1                                     #   (partially) occurred pre-2013
+   Accept: application/json                     # return a JSON feed 
+                                                #   (rather than Atom XML)
+Authorization: i8hweunweunweofiwweoijewiwe
+Host: bbplus-provider.org
+</pre>
+          <h4 id="example-documentreference-feed">Example response</h4>
+          <div class="well alert-info">
+
+            <p><strong>Note</strong>:  FHIR's <code>DocumentReference</code> document
+            descriptor includes a lot more metadata than BB+ may need for the
+            document search endpoint.  FHIR defines many of these fields
+            (including patientId) as required.  The representation below is
+            simplified.</p>
+
+            <p>In practice, to retrieve actual document contents, app
+            developers will want to examine the <code>.entry</code> array of
+            the search result, and for each <code>DocumentReference</code> in that
+            array, the <code>url</code>.<code>value</code> can be extracted and
+            dereferenced.  For more details, see <a
+            href="api-document-fetch">Document Retrieval</a>.
+
+          </div>
+
+          <pre>
+{
+  "title" : "Search results for resource type DocumentReference",
+  "id" : "urn:uuid:aa421641-7ccf-4efe-8ec4-e1f726ae33",
+  "updated" : "2013-04-23T22:20:45Z",
+  "entry" : [
+    {
+      "title" : "Resource example Version 1",
+      "id" : "https://bbplus-provider.org/bb/record/documentreference/@123",
+      "updated" : "2013-04-22T04:15:10Z",
+      "category" : [
+        {
+          "scheme" : "http://hl7.org/fhir/resource-types",
+          "term" : "DocumentReference"
+        }
+      ],
+      "content" : {
+        "DocumentReference" : {
+          "type" : {
+            "coding" : [
+              {
+                "code" : {
+                  "value" : "Consult"
+                },
+                "display" : {
+                  "value" : "Consultation Note"
+                }
+              }
+            ]
+          },
+          "conformsTo" : {
+            "coding" : [
+              {
+                "code" : {
+                  "value" : "CCDA"
+                },
+                "display" : {
+                  "value" : "Consolidated CDA"
+                }
+              }
+            ]
+          },
+          "created" : {
+            "value" : "2005-12-24T09:35:00+11:00"
+          },
+          "indexed" : {
+            "value" : "2005-12-24T09:43:41+11:00"
+          },
+          "status" : {
+            "value" : "current"
+          },
+          "format" : {
+            "value" : "text/xml"
+          },
+          "location" : {
+            "value" : "http://example.org/xds/mhd/binary/@07a6483f-732b-461e-86b6-edb665c45510"
+          },
+        }
+      },
+      "summary" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Text</div>\r\n"
+    }
+  ]
+}
+</pre>
+
+            <h2 id="clinical-document-retrieval">Document Retrieval</h2>
+
+            <h5>Endpoint URI: this endpoint is document-specific</h5>
+            <h3>Retrieving an individual document</h3>
+
+            <p> By performing a <a href="#clinical-search">Document Search</a>,
+            an app obtains an Atom feed (or JSON equivalent) of
+            <code>DocumentReference</code> document descriptors.  To fetch actual
+            document contents, the app issues an authenticated,  HTTPS
+            <code>GET</code> to dereference the document URI.  This URI is
+            available in the <code>./url/@value</code> xpath for an Atom entry,
+            or the <code>url</code>.<code>value</code> field of a JSON feed
+            entry. </p>
+
+      
+          <h4>Example request</h4>
+          For the example <a href="#example-documentreference-feed">JSON feed above</a>, an app would fetch actual document contents via:
+          <pre>
+GET /bb/record/documentreference/@830fcde0-5d03-4305-8589-a4fa8d574d0e/document HTTP/1.1
+Authorization: i8hweunweunweofiwweoijewiwe
+Host: bbplus-provider.org
+</pre>
+ 
+      </section>
+
+        <section id="push-authorization">
+          <div class="page-header">
+            <h1>Push Authorization <span class=
+            "label label-warning">Push</span></h1></div>
+
+            <p>Patient data is stored with many providers, and
+            manually requesting an update from each provider can be
+            difficult for a patient. The following workflow enables
+            BB+ Pull apps to offer patient an easy-to-use
+            OAuth2-based mechanism for creating a BB+ Push
+            connection. In orther words, this workflow helps user
+            find providers and register for BB+ Push updates
+            (Direct e-mail messaging).</p>
+
+            <div class="well alert">
+              <p>In this example, assume the user is interacting
+              with this environment:</p>
+
+              <dl>
+                <dt>Client</dt>
+
+                <dd>BP-Grapher</dd>
+
+                <dt>Service Provider</dt>
+
+                <dd>Good Health Clinic</dd>
+
+                <dt>Scope</dt>
+
+                <dd><code>send-email-to</code> is a special,
+                structured scope that is used to indicate the
+                DIRECT email to send information to for this
+                user</dd>
+              </dl>
+              <p>
+            </div>
+
+            <h3>User Authorization Flow:</h3>
+
+            <p>In this section, we describe how a user can
+            authorize a service provider to send
+            updates as new health data becomes available. To enable
+            this process, the client must perform the following
+            steps:</p>
+
+            <ol>
+              <li>Discovery as described above (<a href=
+              "#discovery-providers">provider discovery</a> at its
+              BB+ Registry ).
+              </li>
+
+              <li>Search, filter, and optionally cache discovered
+              service providers. The user will select one or more
+              to authorize.</li>
+
+              <li>
+                <a href="#registration-trusted">Dynamically
+                register</a> if the client doesn't already have
+                their OAuth 2 credentials for the chosen service
+                provider.
+              </li>
+
+              <li>Send the user (in a web browser) to the service
+              provider's authorization endpoint. They have the
+              option to authorize this provider to push their
+              data.</li>
+
+              <li>Verify success by requesting a token from the
+              service provider's token endpoint to ensure the
+              user's selection succeeded.</li>
+            </ol>
+            <p>
+
+            <h4>1. Discovery</h4>
+
+            <p>Discovery for Push is the same process as shown
+            above for <a href="#discovery-providers">provider
+            discovery</a>. A provider's information, including
+            endpoint URIs, will be served in the following
+            format:</p>
+            <pre class="prettyprint">
+{
+  "name": "Good Health Clinic",
+  "description": "Serving your health needs since 1999",
+  "url": "http://goodhealthclinic.org",
+  "location": {
+    "geo": {                       
+      "latitude": 42.3591,            # just making the point that we can
+      "longitude": -71.0934           # use arbitrary schema.org properties
+    }
+  }
+}
+</pre>
+
+            <h4>2. Search, filter, and cache</h4>
+
+            <p>The specifics of client-side searching, filtering,
+            caching, and selecting are out of scope for this guide.
+            Part of the rationale for delegating this task to the
+            client is that the implementation of these tasks may
+            vary by platform</p>
+
+            <h4>3. Dynamic registration</h4>
+
+            <p>Dynamic registration for Push is the same process as
+            <a href="#registration-trusted">shown above</a>. This
+            step retrieves a client_id and client_secret for this
+            specific service provider. These values may and likely
+            will vary across providers. If the client has already
+            retrieved the client's ID and secret, this step can be
+            skipped. Below is an example of the metadata sent in a
+            request for dynamic registration and the response
+            received.</p>
+
+            <p>Dynamic registration request:</p>
+            <pre class="prettyprint">
+{
+  "url": "https://bpgrapher.org",
+  "name": "Blood Pressure Grapher",
+  "fixed_registration_parameters": {
+    "client_name": "Blood Pressure Grapher",
+    "client_uri": "https://bpgrapher.org",
+    "logo_uri": "http://bpgrapher.org/images/logo.png",
+    "contacts": [
+      "plot-master@bpgrapher.org"
+    ],
+    "tos_uri": "https://bpgrapher.org/tos",
+    "redirect_uris": [
+      "https://bpgrapher.org/after-auth"
+    ],
+    "response_types": ["code"],
+    "grant_types": ["authorization_code"],
+    "token_endpoint_auth_method": "none",
+    "scope":  "send-email-to"
+  },
+}
+</pre>
+
+            <p>Dynamic registration response:</p>
+            <pre class="prettyprint">
+{
+  "client_id": "bp-grapher-goodhealth",
+  "client_secret": "aser98uw4ijhsdfg9r4",
+  "registration_access_token": "2398askljasdf.gjo23r98adsf.asdf8923uwekljashdf7892334",
+  "client_name": "Blood Pressure Grapher",
+  "client_uri": "https://bpgrapher.org",
+  "logo_uri": "http://bpgrapher.org/images/logo.png",
+  "contacts": [
+    "plot-master@bpgrapher.org"
+  ],
+  "tos_uri": "https://bpgrapher.org/tos",
+  "redirect_uris": [
+    "https://bpgrapher.org/after-auth"
+  ],
+  "response_types": ["code"],
+  "grant_types": ["authorization_code"],
+  "token_endpoint_auth_method": "none",
+  "scope":  "send-email-to"
+}
+</pre>
+
+            <h4>4. Authorization request</h4>
+
+            <p>By this step, the client has its OAuth 2
+            credentials. The client will use that data to send the
+            user to the service provider's authorization endpoint.
+            Below is an example authorization request for the code
+            workflow (more information is available in OAuth 2 RFC
+            6749 Section 4.1):</p>
+            <pre class="prettyprint">
+http://portal.goodhealthclinic.org/authorize?
+  response_type=code&amp;
+  client_id=bp-grapher-goodhealth&amp;
+  redirect_uri=https://bpgrapher.org/after-auth&amp;
+  state=aliawejhwiluaq34hiuow&amp;
+  scope=send_email_to:oip8erjoiaewjoi@direct.bp-grapher.org
+</pre>
+
+            <div class="well alert">
+              <p><strong>Note:</strong> The send_email_to scope
+              construct above is asking for permission to send
+              e-mail to the given address after the :, using a
+              simple expression language as part of the structured
+              scope.</p>
+            </div>
+
+            <p>At this point, the client will receive either a
+            positive response or a failure. Hypothetically, this
+            response reflects the ultimate results, but the next
+            step addresses the client's ability to verify this
+            response</p>
+
+            <p>Positive response: Client is redirected to:</p>
+            <pre class="prettyprint">
+https://bpgrapher.org/after-auth?
+  state=aliawejhwiluaq34hiuow&amp;
+  code=oafea8i23n
+</pre>
+
+            <p>Error response: (e.g. user clicked deny):</p>
+            <pre class="prettyprint">
+https://bpgrapher.org/after-auth?
+  state=aliawejhwiluaq34hiuow&amp;
+  error=access_denied (Other error codes are available from 4.1.2.1)
+</pre>
+
+            <h4>5. Verify authorization results</h4>
+
+            <p>To verify that the code we got is real, we request a
+            token using the code from the token endpoint. If this
+            returns an access token (and not an error), then we
+            know the code we used was good and that the user
+            actually authorized for us. Optionally, the client
+            can also check the scope of the returned token to
+            ensure that the requested scopes were received. Below
+            is an example of the request for this verification:</p>
+            <pre class="prettyprint">
+http://portal.goodhealthclinic.org/token
+  client_id=bp-grapher-goodhealth&amp;
+  client_secret=aser98uw4ijhsdfg9r4&amp;
+  redirect_uri=https://bpgrapher.org/after-auth&amp;
+  grant_type=code&amp;
+  code=oafea8i23n
+</pre>
+
+            <p>The server then returns the token structure as
+            follows:</p>
+            <pre class="prettyprint">
+{
+  "access_token": "i8hweunweunweofiwweoijewiwe",
+  "token_type": "bearer",
+  "expires_in": "3600",
+  "scope": "send_email_to:oip8erjoiaewjoi@direct.bp-grapher.org"
+} 
+</pre>
+
+          <div class="well alert-info">
+            <h3>Alternative Push Authorization Strategy
+            <span class="label label-warning">Push</span></h3>An
+            alternative to this whole approach would be to have the
+            Client be Good Health Clinic and the Provider be
+            BP-Grapher, with the protected data being the email
+            address to send things to. This is more in line with
+            OAuth's REST-friendly model and the traditional
+            definition of roles, but it doesn't fit as well with
+            the PUSH methods we're trying to enable here.
+          </div>
+        </section>
+
+        <section id="demo">
+        <h3>Demo of Pull User Experience</h3>
+        For a demonstration of a BB+ Pull app (and a tutorial on how to write one), see:
+        <a href="http://growth-pull.bluebuttonpl.us/">Growth-tastic</a>.
+        </section>
+        
+        <section id="authors">
+        
+        <div class="well"><h3>Authors and contributors</h3>
+        Preliminary protocol specification authored by Josh Mandel, Justin Richer, Keith Boone, and Adam Goldstein for the Blue Button+ Working Group.</div>
+        </section>
+        
+      </div>
+    </div>
+  </div><!-- Footer
+        ================================================== -->
+
+  <footer class="footer">
+    <div class="container">
+      <p>Blue Button+ 2013</p>
+    </div>
+  </footer><!-- Le javascript
+        ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="./assets/js/jquery.js">
+</script> <script src="./assets/js/bootstrap-transition.js">
+</script> <script src="./assets/js/bootstrap-alert.js">
+</script> <script src="./assets/js/bootstrap-modal.js">
+</script> <script src="./assets/js/bootstrap-dropdown.js">
+</script> <script src="./assets/js/bootstrap-tab.js">
+</script> <script src="./assets/js/bootstrap-tooltip.js">
+</script> <script src="./assets/js/bootstrap-popover.js">
+</script> <script src="./assets/js/bootstrap-button.js">
+</script> <script src="./assets/js/bootstrap-collapse.js">
+</script> <script src="./assets/js/bootstrap-affix.js">
+</script> <script src="./assets/js/bootstrap-scrollspy.js">
+</script> <script src="./assets/js/bootstrap-carousel.js">
+</script> <script src="./assets/js/bootstrap-typeahead.js">
+</script> <script src="./assets/js/holder.js">
+</script> <script src="./assets/js/prettify.js">
+</script> <script src="./assets/js/application.js">
+</script>
+<script type="text/javascript" src="http://www.websequencediagrams.com/service.js"></script>
+</body>
+</html>

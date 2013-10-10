@@ -21,11 +21,11 @@ pax-run --log=debug --args=file:org.lenition.osgi.simple-service/felix.run
 
 Service Frameworks, Tools and Component Models
 ==========
-|                      | /org.lenition.osgi.jaxrs-connector  | /whiteboard | /simple  |
+|                      | ...connector  | ...whiteboard   | ...simple  |  ...wab.bootstrap
 | -------------------- |-------------------|-------------|-------------|--------------|
-| osgi-jax-rs-connector| yes               |             |
-| whiteboard pattern   |                   |  yes        |
-| SCR/DS               | yes               |  yes         |     yes       |
+| osgi-jax-rs-connector| yes               |             |             |
+| whiteboard pattern   |                   |  yes        |             |
+| SCR/DS               | yes               |  yes        |     yes     |
 
 
 Monolithic Code -> many dependencies + tight coupling -> risk averse development -> slow development
