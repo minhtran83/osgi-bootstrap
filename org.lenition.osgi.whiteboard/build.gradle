@@ -21,12 +21,8 @@ jar {
                     'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
                     '*'
         instruction 'Export-Package', "${name}.*"
-        instruction 'Private-Package', '*'
         instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
         instruction 'Bundle-Activator', 'org.lenition.osgi.whiteboard.Activator'
-        attributes 'Built-By': gradle.gradleVersion
-        //instruction 'Build-Version', '0.0'
-        //instruction 'Build-Repo-BranchName', 'origin'
-        //instruction 'Build-Repo-CurrentCommitHash', '0001'
+        attributes 'Built-By': 'gradle-' + gradle.gradleVersion
     }
 }

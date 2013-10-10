@@ -26,14 +26,10 @@ jar {
         name = 'org.lenition.osgi.connector'
 
         instruction 'Import-Package',
-                'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
-                '*'
+                    'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
+                    '*'
         instruction 'Export-Package', "!${name}.*"
         instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
-//        instruction 'Bundle-SymbolicName', "org.lenition.osgi.connector"
-        attributes 'Built-By': gradle.gradleVersion
-        //instruction 'Build-Version', '0.0'
-        //instruction 'Build-Repo-BranchName', 'origin'
-        //instruction 'Build-Repo-CurrentCommitHash', '0001'
+        attributes 'Built-By': 'gradle-' + gradle.gradleVersion
     }
 }
