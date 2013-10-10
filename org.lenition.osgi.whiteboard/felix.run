@@ -14,9 +14,6 @@
 --vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dfelix.fileinstall.dir=../org.lenition.osgi.whiteboard/src/main/config -Dfelix.fileinstall.disableConfigSave=true -Dfelix.fileinstall.noInitialDelay=true
 #--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
 
-#### GSON ####
-#scan-bundle:mvn:com.google.code.gson/gson/2.2.2
-
 #### Jersy JAX-RS ####
 scan-bundle:mvn:com.sun.jersey/jersey-core/1.17
 scan-bundle:mvn:com.sun.jersey/jersey-servlet/1.17
@@ -27,10 +24,7 @@ scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.1
 scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-service/1.7.1
 
 #### Pax Web (HTTP Service, WAB support, JSP support) ####
-scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-api/2.1.2
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-extender-war/2.1.2
-#scan-bundle:mvn:org.ops4j.pax.web/pax-web-jsp/2.1.2
+scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/3.0.2
 
 #### Apache Felix Utiltiies ####
 #### localhost:8080/system/console ####
@@ -41,11 +35,6 @@ scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
 scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.http.whiteboard/2.2.1
 scan-bundle:mvn:org.apache.felix/org.apache.felix.http.api/2.2.1
-
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.0.2@5
-#scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/1.0.0@5
-
-#scan-bundle:mvn:org.osgi/org.osgi.compendium/4.3.1
 
 #### Declarative Services ####
 scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2

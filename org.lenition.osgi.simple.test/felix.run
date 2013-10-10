@@ -15,7 +15,7 @@
 #--profilesRepositories=https://raw.github.com/sneakybeaky/paxrunner_samples/master/runner-repository
 
 #### Pax Web (HTTP Service, WAB support, JSP support) ####
-scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/2.1.2
+scan-bundle:mvn:org.ops4j.pax.web/pax-web-jetty-bundle/3.0.2
 
 #### Pax Logging ####
 scan-bundle:mvn:org.ops4j.pax.logging/pax-logging-api/1.7.1
