@@ -36,14 +36,16 @@ Make modularity a high priority design criteria -> team autonomy
 Best Practices:
  - Avoid start order dependencies
  - Use Import-Package rather than Require-Bundle (http://www.ibm.com/developerworks/websphere/techjournal/1007_charters/1007_charters.html#sec8)
- - Semantic Versioning (i.e, [1.1.2,2.0) )
- - Version all the bundles, but especially version the exported packages
+ - Use Semantic Versioning (i.e, [1.1.2,2.0) )
+ - Version all the bundles
+ - Always export packages with a version
  - gradle version == bundle version == export packages versions
- - generally, export all packages except impl.* and internal.*
- - Separate API from Implementation
+ - Export all packages except impl.* and internal.*
+ - Separate API and Implementation Bundles
  - Fail quickly
  - Also use Executor service for long/slow operations performed as a callback
  - pass a ClassLoader that the framework should use when it performs its lookup by name
+ - optional imports (resolution:="optional") can affect start order and cause side-effects
 
 
 Challenges:
@@ -52,8 +54,7 @@ Challenges:
 
 
 TODO:
-
-remove org.apache.felix:* buildtime dependencies
+http://www.jayway.com/2010/02/09/building-osgi-bundles-with-scala-and-gradle/
 https://github.com/seijoed/osgi-starter/blob/master/itest/src/test/java/com/packt/osgi/starter/tests/ProducerAndConsumerTest.java
 http://aries.apache.org/
 http://my.safaribooksonline.com/book/programming/java/9781617290138/chapter-4dot-packaging-your-enterprise-osgi-applications/ch04lev1sec3_html

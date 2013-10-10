@@ -1,12 +1,20 @@
 dependencies {
+
+    /**
+     * External module dependencies
+     */
     compile 'org.osgi:org.osgi.core:4.3.0',
             "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
             "com.sun.jersey:jersey-bundle:$versions.jersey",
             "com.google.code.gson:gson:$versions.gson",
             "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
             "com.google.guava:guava:$versions.guava",
-            'org.osgi:org.osgi.compendium:4.3.1'
+            'org.osgi:org.osgi.compendium:4.3.1',
+            "biz.aQute:bndlib:$versions.bndlib"
 
+    /**
+     * Project dependencies
+     */
     compile project(':org.lenition.osgi.simple')
 }
 
@@ -14,15 +22,15 @@ jar.dependsOn(genscr)
 
 jar {
     manifest {
-        version = '0.0.1'
+        version = '0.0.1.${tstamp}'
         name = 'org.lenition.osgi.connector'
 
         instruction 'Import-Package',
                 'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
                 '*'
-        instruction 'Export-Package', '*'
-        instruction 'Private-Package', 'org.lenition.osgi.connector.*'
+        instruction 'Export-Package', "!${name}.*"
         instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
+//        instruction 'Bundle-SymbolicName', "org.lenition.osgi.connector"
         attributes 'Built-By': gradle.gradleVersion
         //instruction 'Build-Version', '0.0'
         //instruction 'Build-Repo-BranchName', 'origin'

@@ -2,7 +2,10 @@
 status = project.hasProperty('preferredStatus')?project.preferredStatus:(version.contains('SNAPSHOT')?'snapshot':'release')
 
 subprojects { project ->
-    group = "org.lenition.$githubProjectName"
+
+    // The Bundle-SymbolicName is set using an approached based on Maven2OsgiConverter, which prefixes the groupId
+    // see http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html
+    group = ""
 
     apply plugin: 'java'
     apply plugin: 'osgi'
