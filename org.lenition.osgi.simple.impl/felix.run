@@ -31,10 +31,10 @@ scan-bundle:mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8
 scan-bundle:mvn:org.apache.felix/org.osgi.compendium/1.4.0
 scan-bundle:mvn:org.apache.felix/org.apache.felix.gogo.runtime/0.10.0
 
-
 #### Declarative Services ####
 scan-bundle:mvn:org.apache.felix/org.apache.felix.scr/1.6.2
 
 #### Primary JAR Provisioning ####
 file:org.lenition.osgi.simple/build/libs/org.lenition.osgi.simple.jar@update
+file:org.lenition.osgi.simple/build/libs/org.lenition.osgi.simple.impl.jar@update
 

@@ -1,4 +1,8 @@
 dependencies {
+
+    /**
+     * External module dependencies
+     */
     compile 'org.osgi:org.osgi.core:4.3.0',
             "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
             "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
@@ -6,8 +10,12 @@ dependencies {
             'org.apache.felix:org.apache.felix.shell:1.4.3',
             'org.osgi:org.osgi.compendium:4.3.1',
             "junit:junit:$versions.junit",
-            'org.apache.felix:org.apache.felix.dependencymanager:3.1.0',
-            project(':org.lenition.osgi.simple')
+            'org.apache.felix:org.apache.felix.dependencymanager:3.1.0'
+
+    /**
+     * Project dependencies
+     */
+    compile project(':org.lenition.osgi.simple')
 }
 
 jar.dependsOn(genscr)

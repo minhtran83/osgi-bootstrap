@@ -1,9 +1,5 @@
 dependencies {
-    compile 'org.osgi:org.osgi.core:4.3.1',
-            "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
-            "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
-            'org.apache.felix:org.apache.felix.gogo.runtime:0.10.0',
-            'org.osgi:org.osgi.compendium:4.3.1'
+    compile "biz.aQute:bndlib:$versions.bndlib"
 }
 
 jar.dependsOn(genscr)
@@ -16,7 +12,7 @@ jar {
         instruction 'Import-Package',
                     'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
                     '*'
-        instruction 'Export-Package', "${name}, !${name}.impl.*"
+        instruction 'Export-Package', "*"
         instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
         attributes 'Built-By': 'gradle-' + gradle.gradleVersion
     }

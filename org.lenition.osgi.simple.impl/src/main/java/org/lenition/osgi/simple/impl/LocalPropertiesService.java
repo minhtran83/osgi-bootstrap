@@ -26,6 +26,8 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A method for providing a shell command.
@@ -47,6 +49,8 @@ import org.osgi.service.cm.ConfigurationAdmin;
         @Property(name = CommandProcessor.COMMAND_FUNCTION, value = { "property", "map", "configurations" })
 })
 public final class LocalPropertiesService implements PropertiesService {
+
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY, policy = ReferencePolicy.DYNAMIC)
     private ConfigurationAdmin configurationAdmin;

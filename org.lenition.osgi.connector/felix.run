@@ -50,5 +50,5 @@ file:org.lenition.osgi.connector/build/libs/org.lenition.osgi.connector.jar@upda
 
 #### Optional JAR Provisioning ####
 file:org.lenition.osgi.simple/build/libs/org.lenition.osgi.simple.jar@update
-
+file:org.lenition.osgi.simple.impl/build/libs/org.lenition.osgi.simple.impl.jar@update
 

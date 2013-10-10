@@ -9,12 +9,12 @@ gradlew build
 ```
 
 ```
-pax-run --log=debug --args=file:org.lenition.osgi.jaxrs-connector/felix.run
+pax-run --log=debug --args=file:org.lenition.osgi.connector/felix.run
 ```
 or
 ```
-pax-run --log=debug --args=file:whiteboard/felix.run
-pax-run --log=debug --args=file:simple-service/felix.run
+pax-run --log=debug --args=file:org.lenition.osgi.whiteboard/felix.run
+pax-run --log=debug --args=file:org.lenition.osgi.simple-service/felix.run
 ```
 
 
