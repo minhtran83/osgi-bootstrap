@@ -22,8 +22,8 @@ jar.dependsOn(genscr)
 
 jar {
     manifest {
+        name = project.name
         version = '0.0.1.${tstamp}'
-        name = 'org.lenition.osgi.connector'
 
         instruction 'Import-Package',
                     'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
