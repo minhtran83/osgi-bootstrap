@@ -10,7 +10,8 @@ ext {
             jersey                 : '1.17',
             gson                   : '2.2.2',
             guava                  : '15.0',
-            restassured            : '1.8.1'
+            restassured            : '1.8.1',
+            bndlib                 : '1.50.0'
     ]
 
     libraries = [
