@@ -1,6 +1,9 @@
-package org.lenition.osgi;
+package org.lenition.osgi.whiteboard;
 
+import com.sun.jersey.api.core.DefaultResourceConfig;
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Properties;
+import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
 
 import javax.ws.rs.core.Application;
@@ -11,14 +14,17 @@ import java.util.Set;
  */
 @Service(Application.class)
 @Component
-public class ConfiguredResourceApplication extends Application {
+@Properties({
+        @Property(name = "alias", value = "/root")
+})
+public class ResourceApplication extends DefaultResourceConfig {
 
     private final Set<Class<?>> resources  = new java.util.HashSet<Class<?>>();
 
     /**
      * Default constructor.
      */
-    public ConfiguredResourceApplication() {
+    public ResourceApplication() {
         resources.add(Resource.class);
     }
 

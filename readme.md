@@ -37,7 +37,7 @@ Best Practices:
  - Avoid start order dependencies
  - Use Import-Package rather than Require-Bundle (http://www.ibm.com/developerworks/websphere/techjournal/1007_charters/1007_charters.html#sec8)
  - Semantic Versioning (i.e, [1.1.2,2.0) )
- - Version all the bundles
+ - Version all the bundles, but especially version the exported packages
  - gradle version == bundle version == export packages versions
  - generally, export all packages except impl.* and internal.*
  - Separate API from Implementation
@@ -52,9 +52,15 @@ Challenges:
 
 
 TODO:
-get configadmin working for all projects
+
+remove org.apache.felix:* buildtime dependencies
+https://github.com/seijoed/osgi-starter/blob/master/itest/src/test/java/com/packt/osgi/starter/tests/ProducerAndConsumerTest.java
 http://aries.apache.org/
 http://my.safaribooksonline.com/book/programming/java/9781617290138/chapter-4dot-packaging-your-enterprise-osgi-applications/ch04lev1sec3_html
+
+
+http://techbus.safaribooksonline.com/book/programming/java/9781617290138/part-2dot-building-better-enterprise-osgi-applications/118?percentage=&reader=#X2ludGVybmFsX0J2ZGVwRmxhc2hSZWFkZXI/eG1saWQ9OTc4MTYxNzI5MDEzOC83OA==
+http://techbus.safaribooksonline.com/book/operating-systems-and-server-administration/virtualization/9781449345143/idot-introducing-modularity-in-java/ch05_html
 
 BndTools:
 https://bitbucket.org/amdatu/showcase/src/1e078853256ef1088295f9d3df246ce8b113d8aa/build.gradle?at=master
@@ -80,9 +86,6 @@ http://cxf.apache.org/distributed-osgi-greeter-demo-walkthrough.html
 http://svn.apache.org/repos/asf/cxf/dosgi/trunk/samples/greeter/
 http://camel.apache.org/cxf-example-osgi.html
 http://cxf.apache.org/distributed-osgi-reference.html#DistributedOSGiReference-DistributedOSGiReferenceGuide
-
-IntelliJ plugins:
-http://plugins.jetbrains.com/plugin/?webide&id=7009
 
 Karaf shell:
 http://icodebythesea.blogspot.com/2011/11/creating-your-own-apache-karaf-console.html

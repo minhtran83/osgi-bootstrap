@@ -1,4 +1,4 @@
-package org.lenition.osgi;
+package org.lenition.osgi.whiteboard;
 
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 import org.osgi.framework.Bundle;

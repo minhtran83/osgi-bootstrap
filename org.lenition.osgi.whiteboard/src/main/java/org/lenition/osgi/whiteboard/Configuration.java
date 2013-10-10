@@ -1,9 +1,7 @@
-package org.lenition.osgi;
+package org.lenition.osgi.whiteboard;
 
 import java.util.Dictionary;
 
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 
@@ -11,8 +9,6 @@ import org.osgi.service.cm.ManagedService;
  * ManagedService for configuration. CONFIG_SERVICE_PID must match the name of
  * a .cfg file in Felix fileinstall directory.
  */
-@Component
-@Service
 public class Configuration implements ManagedService {
 
     /**

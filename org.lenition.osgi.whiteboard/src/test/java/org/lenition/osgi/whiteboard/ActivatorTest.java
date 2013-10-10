@@ -1,4 +1,4 @@
-package org.lenition.osgi;
+package org.lenition.osgi.whiteboard;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
