@@ -1,0 +1,98 @@
+apply plugin: 'scala'
+apply plugin: 'osgi'
+
+repositories {
+    mavenCentral()
+    maven { url "http://svn.apache.org/repos/asf/servicemix/m2-repo" }
+    maven { url "http://repo.fusesource.com/nexus/content/groups/public" }
+    flatDir name: 'localLib', dirs: 'lib'
+}
+
+ext {
+    versions = [
+            osgi                   : '4.3.1',
+            junit                  : '4.11',
+            paxlogging             : '1.7.1',
+            felixscr               : '1.9.6',
+            felixscrant            : '1.7.0',
+            jersey                 : '1.17',
+            gson                   : '2.2.2',
+            guava                  : '15.0',
+            restassured            : '1.8.1',
+            bndlib                 : '1.50.0',
+            scala                  : '2.10.0',
+            scalatest              : '2.0.M5',
+            scalacheck             : '1.10.0'
+    ]
+}
+
+dependencies {
+
+    runtime "org.scala-lang:scala-compiler:$versions.scala"
+    runtime  "org.scalaconsole:ScalaConsole:2.10-1.5.RC5"
+    runtime  "org.scala-lang:scala-swing:$versions.scala"
+
+    testCompile "org.scalatest:scalatest_$versions.scala:$versions.scalatest"
+    testCompile "org.scalacheck:scalacheck_$versions.scala:$versions.scalacheck"
+
+    compile "org.scala-lang:scala-library:$versions.scala",
+            "org.osgi:org.osgi.core:$versions.osgi",
+            "org.osgi:org.osgi.compendium:$versions.osgi",
+            "org.apache.felix:org.apache.felix.scr.annotations:$versions.felixscr",
+            "com.sun.jersey:jersey-bundle:$versions.jersey",
+            "com.google.code.gson:gson:$versions.gson",
+            "org.ops4j.pax.logging:pax-logging-api:$versions.paxlogging",
+            "com.google.guava:guava:$versions.guava",
+            "biz.aQute:bndlib:$versions.bndlib"
+}
+
+
+/**
+ * For ScalaTest, Gradle can either use the JUnitRunner
+ * or the <scalatest> ant task.  Use this to define
+ * the ant task
+ */
+test {
+    ant.taskdef(name: 'scalatest',
+            classname: 'org.scalatest.tools.ScalaTestAntTask',
+            classpath: classpath.asPath)
+}
+
+/**
+ * Then use this to run the scalatest ant task.  Look to
+ * http://scalatest.org/user_guide/using_the_scalatest_ant_task
+ * for documentation
+ */
+test << {
+    ant.scalatest(runpath: sourceSets.test.output.asPath,
+            haltonfailure: 'true',
+            fork: 'false') {
+        reporter(type: 'stderr')
+    }
+}
+
+scalaConsole.dependsOn(build)
+scalaConsole.dependsOn(test)
+scalaConsole.classpath += sourceSets.main.output
+scalaTestConsole.classpath += sourceSets.test.output
+
+task console(type: JavaExec, dependsOn: classes){
+    main = 'org.scalaconsole.ScalaConsole'
+    classpath = configurations.runtime + sourceSets.main.output + sourceSets.test.output
+}
+
+
+jar {
+    manifest {
+        name = project.name
+        version = '0.0.1.${tstamp}'
+
+        instruction 'Import-Package',
+                    'org.slf4j;version="[1.6.1,2.0)";provider=paxlogging',
+                    '*'
+        instruction 'Bundle-Activator', 'org.lenition.osgi.scala.Activator'
+        instruction 'Export-Package', "*"
+//        instruction 'Service-Component', 'OSGI-INF/serviceComponents.xml'
+        attributes 'Built-By': 'gradle-' + gradle.gradleVersion
+    }
+}

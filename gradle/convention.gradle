@@ -1,6 +1,9 @@
 // GRADLE-2087 workaround, perform after java plugin
 status = project.hasProperty('preferredStatus')?project.preferredStatus:(version.contains('SNAPSHOT')?'snapshot':'release')
 
+//scalaprojects = subprojects.findAll { it.name.startsWith("internal") || it.name in ["integTest", "distributions"] }
+// javaprojects = subprojects - scalaprojects
+
 subprojects { project ->
 
     // The Bundle-SymbolicName is set using an approached based on Maven2OsgiConverter, which prefixes the groupId
