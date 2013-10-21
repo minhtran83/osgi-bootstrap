@@ -1,0 +1,10 @@
+
+
+
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.web.rest.doc.swagger.ui/org.amdatu.web.rest.doc.swagger.ui-1.0.2.jar
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.mongo/org.amdatu.mongo-1.0.4.jar
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.web.rest.doc.swagger/org.amdatu.web.rest.doc.swagger-1.0.2.jar
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.web.rest.doc/org.amdatu.web.rest.doc-1.0.2.jar
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.web.rest.jaxrs/org.amdatu.web.rest.jaxrs-1.0.2.jar
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.web.rest.wink/org.amdatu.web.rest.wink-1.0.6.jar
+scan-bundle:http://repository.amdatu.org/snapshot/org.amdatu.web.resourcehandler/org.amdatu.web.resourcehandler-1.0.2.jar
