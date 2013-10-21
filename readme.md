@@ -54,7 +54,8 @@ Challenges:
 
 
 TODO:
-http://www.jayway.com/2010/02/09/building-osgi-bundles-with-scala-and-gradle/
+https://github.com/mtwestra/button-model/blob/master/src/buttons/core.clj
+
 https://github.com/seijoed/osgi-starter/blob/master/itest/src/test/java/com/packt/osgi/starter/tests/ProducerAndConsumerTest.java
 http://aries.apache.org/
 http://my.safaribooksonline.com/book/programming/java/9781617290138/chapter-4dot-packaging-your-enterprise-osgi-applications/ch04lev1sec3_html
@@ -67,9 +68,6 @@ BndTools:
 https://bitbucket.org/amdatu/showcase/src/1e078853256ef1088295f9d3df246ce8b113d8aa/build.gradle?at=master
 https://github.com/tux2323/bndtools-gradle-demo
 
-
-WAB:
-http://blog.knowhowlab.org/2010/10/osgi-tutorial-4-ways-to-activate-code.html
 
 BluePrint :
 http://aries.apache.org/modules/blueprintannotation.html
