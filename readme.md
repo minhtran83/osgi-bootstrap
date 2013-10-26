@@ -5,6 +5,13 @@ To run :
 
 ```
 pax-runner/setenv.bat
+```
+or
+```
+source pax-runner/setenv.sh
+```
+then 
+```
 gradlew build
 ```
 
