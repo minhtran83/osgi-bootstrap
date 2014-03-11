@@ -1,0 +1,80 @@
+/**
+ * To add integrations tests:
+ * 1) Create folders: src\itest\{config, java}
+ * 2) Add test connection pool configurations to src\itest\config
+ * 3) Add integration tests in classes under src\itest\java
+ * 4) Add 
+ *    apply from : '../../infrastructure/gradle/paxexam_itest.gradle' 
+ *    to top project's build.gradle
+ *  5) Add
+ *     apply from : '../../infrastructure/gradle/paxexam_itest_task.gradle'
+ *     to bottom of project's build.gradle
+ *  6) Run tests with 'gradle itest'
+ */
+
+project.configurations {
+  itestCompile.extendsFrom testCompile
+  itestRuntime.extendsFrom testRuntime
+  itestBundles {
+    transitive = false
+  }
+  itestFragments {
+    transitive = false
+  }
+}
+
+sourceSets {
+  itest {
+    java {
+      compileClasspath += main.output
+      runtimeClasspath += main.output
+    }
+  }
+}
+
+dependencies {
+  testCompile 'junit:junit:4.11',
+    'org.osgi:org.osgi.core:4.3.1',
+    'org.ops4j.pax.exam:pax-exam-container-native:3.0.0',
+    'org.ops4j.pax.exam:pax-exam-junit4:3.0.0',
+    'org.ops4j.pax.url:pax-url-aether:1.5.2'
+
+  /* ----------------------------------------------------------------------
+   * Integraton Test compile dependencies
+   *
+   * Additional compile dependencies should be added to the project's 
+   * dependency closure in build.gradle.
+   * ------------------------------------------------------------------- */
+  itestCompile 'org.apache.felix:org.apache.felix.framework:4.2.0'
+  
+  /* ----------------------------------------------------------------------
+   * Integraton Test runtime dependencies
+   *
+   * These dependencies will be placed on the classpath for the JVM executing
+   * the Pax Exam integration tests.
+   * 
+   * Additional runtime dependencies should be added to the project's 
+   * dependency closure in build.gradle.
+   * ------------------------------------------------------------------- */
+  itestRuntime 'org.ops4j.pax.url:pax-url-aether:1.5.2'
+  itestRuntime 'org.ops4j.pax.exam:pax-exam-link-mvn:3.0.0'
+
+  /* ----------------------------------------------------------------------
+   * Integraton Test runtime BUNDLE dependencies
+   *
+   * These bundles will be loaded into the OSGi container prior to
+   * integration tests being run.
+   * 
+   * Additional runtime dependencies should be added to the project's 
+   * dependency closure in build.gradle.
+   * ------------------------------------------------------------------- */
+  itestBundles 'org.apache.felix:org.apache.felix.scr:1.6.2'
+  itestBundles 'org.osgi:org.osgi.compendium:4.3.1'
+  itestBundles 'org.apache.felix:org.apache.felix.fileinstall:3.2.6'
+  itestBundles 'org.apache.felix:org.apache.felix.configadmin:1.4.0'
+  itestBundles 'org.apache.aries.blueprint:org.apache.aries.blueprint:1.1.0'
+  itestBundles 'org.apache.aries.proxy:org.apache.aries.proxy:1.0.1'
+  itestBundles 'org.apache.aries:org.apache.aries.util:1.1.0'
+}
+
+build.dependsOn(itestClasses)
